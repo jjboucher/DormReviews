@@ -7,3 +7,6 @@
 # then go to localhost:8000/dormapp
 
 # Use SQLite DBBrowser and you can browse the database.
+
+# Reference this tutorial to play around with the database API:
+# https://docs.djangoproject.com/en/4.1/intro/tutorial02/
