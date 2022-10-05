@@ -10,3 +10,6 @@
 
 # Reference this tutorial to play around with the database API:
 # https://docs.djangoproject.com/en/4.1/intro/tutorial02/
+
+#how to query based on id
+https://django.fun/en/docs/django/4.0/topics/db/queries/#queries-over-related-objects
