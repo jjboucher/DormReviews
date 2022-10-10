@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-import helpers.queries as queries
+from .helpers import queries
 
 # Create your views here.
 

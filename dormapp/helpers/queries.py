@@ -1,4 +1,4 @@
-import models as m
+from dormapp.models import models as m
 
 def getUniversities():
     universities = m.University.objects.all()
