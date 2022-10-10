@@ -8,10 +8,16 @@ def index(request):
     context = {
         'universitiesList': queries.getUniversities()
     }
-    return render(request, "homePage.html",context)
+    return render(request, "homePage.html", context)
 
 def resHallsPage(request):
     context = {
         'resHallsList': queries.getResHalls(request.universityId)
     }
     return render(request, 'resHalls.html', context)
+
+def dormRoomsPage(request):
+    context = {
+        'dormRoomList': queries.getDormRooms(request.resHallId)
+    }
+    return render(request, 'dormRooms.html', context)
