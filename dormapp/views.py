@@ -1,11 +1,17 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-
+import helpers.queries as queries
 
 # Create your views here.
 
 def index(request):
     context = {
-        'name': 'josh'
+        'universitiesList': queries.getUniversities()
     }
     return render(request, "homePage.html",context)
+
+def resHallsPage(request):
+    context = {
+        'resHallsList': queries.getResHalls(request.universityId)
+    }
+    return render(request, 'resHalls.html', context)
