@@ -23,6 +23,7 @@ class ResHallReview(models.Model):
     starRating = models.IntegerField(default=0)
     reviewTitle = models.CharField(max_length=255)
     reviewBody = models.TextField(max_length=1500)
+    dateCreated = models.DateTimeField(null=True,blank=True)
 
 class DormRoomReview(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -30,13 +31,16 @@ class DormRoomReview(models.Model):
     starRating = models.IntegerField(default=0)
     reviewTitle = models.CharField(max_length=255)
     reviewBody = models.TextField(max_length=1500)
+    dateCreated = models.DateTimeField(null=True,blank=True)
 
 class ResHallPhoto(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     resHall = models.ForeignKey(ResHall, on_delete=models.CASCADE)
     photo = models.ImageField(upload_to='res-hall-photos')
+    dateCreated = models.DateTimeField(null=True,blank=True)
 
 class DormRoomPhoto(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     dormRoom = models.ForeignKey(ResHall, on_delete=models.CASCADE)
     photo = models.ImageField(upload_to='dorm-room-photos')
+    dateCreated = models.DateTimeField(null=True,blank=True)
