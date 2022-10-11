@@ -11,10 +11,10 @@ class resHallView():
         self.rating = rating
 
 def getResHalls(universityId):
-    resHalls = m.ResHall.filter(university = universityId)
+    resHalls = m.ResHall.objects.filter(university = universityId)
     returnList = []
     for resHall in resHalls:
-        reviews = m.ResHallReview.filter(resHall = resHall.id)
+        reviews = m.ResHallReview.objects.filter(resHall = resHall.id)
         ratings = []
         for review in reviews:
             ratings.append(review.starRating)

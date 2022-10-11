@@ -6,8 +6,22 @@
 </head>
 
 <body>
-	<h1>DormReviews</h1>
-	<p> Welcome to DormReviews, {{name}}</p>
+
+	<h1> DormReviews </h1>
+	<div class="universityDropDown">
+		<form action="resHalls" method="POST">{% csrf_token %}
+			<label for="universities">Select a school</label>
+			<select name="universities" id="universities">
+			{% for universities in universitiesList %}
+				<option value= {{universities.id}}>{{ universities.name }}</option>
+		
+	   
+	    	{% endfor %}
+	    	</select>
+	    	<input type="submit" value="Submit">
+		</form>
+
+	</div>
 
 
 </body>

@@ -11,8 +11,12 @@ def index(request):
     return render(request, "homePage.html", context)
 
 def resHallsPage(request):
+    universityId=request.POST.get('universities')
+
     context = {
-        'resHallsList': queries.getResHalls(request.universityId)
+        'universityId': universityId,
+        'resHallsList': queries.getResHalls(universityId)
+
     }
     return render(request, 'resHalls.html', context)
 
