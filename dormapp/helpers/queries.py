@@ -29,6 +29,10 @@ def getResHalls(universityId):
     
     return returnList
 
+def addResHallReview(hall, rating, title, body):
+    review = m.ResHallReview(resHall = hall, starRating = rating, reviewTitle = title, reviewBody = body)
+    review.save()
+
 class dormRoomView():
     def __init__(self, name, thumbnail, rating):
         self.name = name
@@ -53,3 +57,7 @@ def getDormRooms(resHallId):
         returnList.append(dormRoomView(dormRoom.name, thumbnail, averageRating))
     
     return returnList
+
+def addDormRoomReview(room, rating, title, body):
+    review = m.DormHallReview(dormRoom = room, starRating = rating, reviewTitle = title, reviewBody = body)
+    review.save()
