@@ -6,7 +6,11 @@
 </head>
 
 <body>
-	<h1>{{universityId}}</h1>
+	<h1>Residence Halls</h1>
+	{% for resHalls in resHallsList %}
+
+	<p>{{resHalls.name}</p>
+	{% endfor %}
 
 
 
