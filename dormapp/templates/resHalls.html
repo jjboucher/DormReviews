@@ -1,19 +1,13 @@
-<DOCTYPE html>
-<html lang="en">
 
-<head>
-	<title>DormReviews</title>
-</head>
+{% extends 'base.html' %}
 
-<body>
-	<h1>Residence Halls</h1>
-	{% for resHalls in resHallsList %}
+{% block content %}
+<h1>Residence Halls</h1>
+{% for resHalls in resHallsList %}
 
-	<p>{{resHalls.name}}</p>
-	{% endfor %}
+	<p>{{resHalls.name}} - {{resHalls.averageRating}}</p>
+{% endfor %}
 
 
 
-</body>
-
-</html>
+{% endblock %}
