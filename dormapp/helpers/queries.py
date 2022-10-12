@@ -14,12 +14,11 @@ def getResHalls(universityId):
     resHalls = m.ResHall.objects.filter(university = universityId)
     returnList = []
     for resHall in resHalls:
-        ratings = m.ResHallReview.objects.filter(resHall = resHall.id)
-        ratingsList = [value for key,value in ratings]
+        ratings = m.ResHallReview.objects.filter(resHall = resHall.id).values_list('starRating', flat=True)
         
         averageRating = 0
-        if len(ratingsList) > 0:
-            averageRating = sum(ratingsList) / len(ratingsList)
+        if len(ratings) > 0:
+            averageRating = sum(ratings) / len(ratings)
 
         thumbnail = None
         photos = m.ResHallPhoto.objects.filter(resHall = resHall.id)
@@ -40,7 +39,7 @@ def getDormRooms(resHallId):
     dormRooms = m.DormRoom.objects.filter(resHall = resHallId)
     returnList = []
     for dormRoom in dormRooms:
-        ratings = m.DormRoomReview.objects.filter(dormRoom = dormRoom.id).values('starRating')
+        ratings = m.DormRoomReview.objects.filter(dormRoom = dormRoom.id).values_list('starRating', flat=True)
     
         averageRating = 0
         if len(ratings) > 0:
