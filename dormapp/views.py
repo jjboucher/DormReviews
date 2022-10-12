@@ -14,7 +14,7 @@ def resHallsPage(request):
     universityId=request.POST.get('universities')
 
     context = {
-        'universityId': universityId,
+        
         'resHallsList': queries.getResHalls(universityId)
 
     }
