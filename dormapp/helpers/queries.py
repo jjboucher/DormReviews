@@ -14,11 +14,12 @@ def getResHalls(universityId):
     resHalls = m.ResHall.objects.filter(university = universityId)
     returnList = []
     for resHall in resHalls:
-        ratings = m.ResHallReview.objects.filter(resHall = resHall.id).values('starRating')
+        ratings = m.ResHallReview.objects.filter(resHall = resHall.id)
+        ratingsList = [value for key,value in ratings]
         
         averageRating = 0
-        if len(ratings) > 0:
-            averageRating = sum(ratings) / len(ratings)
+        if len(ratingsList) > 0:
+            averageRating = sum(ratingsList) / len(ratingsList)
 
         thumbnail = None
         photos = m.ResHallPhoto.objects.filter(resHall = resHall.id)
