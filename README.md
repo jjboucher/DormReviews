@@ -13,3 +13,7 @@
 
 #how to query based on id
 https://django.fun/en/docs/django/4.0/topics/db/queries/#queries-over-related-objects
+
+#static files and bootstrap tutorials:
+https://data-flair.training/blogs/django-static-files-handling/
+https://data-flair.training/blogs/django-bootstrap/#:~:text=In%20Django%20project%27s%20main%20settings,add%20boot%2F%20folder%20to%20STATIC_DIRS.&text=This%20will%20let%20Django%20search,can%20be%20loaded%20from%20there.
