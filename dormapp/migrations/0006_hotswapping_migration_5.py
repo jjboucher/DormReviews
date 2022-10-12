@@ -4,7 +4,7 @@ from django.db import migrations
 
 def initResHallPhotos(apps,schema_editor):
     resHallModel = apps.get_model('dormapp','ResHall')
-    resHallPhotoModel = apps.get_model('dormapp','ResHallPhotos')
+    resHallPhotoModel = apps.get_model('dormapp','ResHallPhoto')
 
     resHallPhotoModel.objects.create(
         resHall = resHallModel.objects.all()[0],
