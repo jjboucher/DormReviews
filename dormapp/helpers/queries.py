@@ -14,14 +14,16 @@ def getResHalls(universityId):
     resHalls = m.ResHall.objects.filter(university = universityId)
     returnList = []
     for resHall in resHalls:
-        reviews = m.ResHallReview.objects.filter(resHall = resHall.id)
-        ratings = []
-        for review in reviews:
-            ratings.append(review.starRating)
+        ratings = m.ResHallReview.objects.filter(resHall = resHall.id).values('starRating')
         
-        averageRating = sum(ratings) / len(ratings)
+        averageRating = 0
+        if len(ratings) > 0:
+            averageRating = sum(ratings) / len(ratings)
 
-        thumbnail = m.ResHallPhoto.filter(resHall = resHall.id).latest('dateCreated').photo
+        thumbnail = None
+        photos = m.ResHallPhoto.objects.filter(resHall = resHall.id)
+        if len(photos) > 0:
+            thumbnail = photos.latest('dateCreated').photo
 
         returnList.append(resHallView(resHall.name, thumbnail, averageRating))
     
@@ -34,14 +36,19 @@ class dormRoomView():
         self.rating = rating
 
 def getDormRooms(resHallId):
-    dormRooms = m.DormRoom.filter(resHall = resHallId)
+    dormRooms = m.DormRoom.objects.filter(resHall = resHallId)
     returnList = []
     for dormRoom in dormRooms:
-        ratings = m.DormRoomReview.filter(dormRoom = dormRoom.id).values('starRating')
+        ratings = m.DormRoomReview.objects.filter(dormRoom = dormRoom.id).values('starRating')
     
-        averageRating = sum(ratings) / len(ratings)
+        averageRating = 0
+        if len(ratings) > 0:
+            averageRating = sum(ratings) / len(ratings)
 
-        thumbnail = m.DormRoomPhoto.filter(dormRoom = dormRoom.Id).latest('dateCreated').photo
+        thumbnail = None
+        photos = m.DormRoomPhoto.objects.filter(dormRoom = dormRoom.Id)
+        if len(photos) > 0:
+            thumbnail = photos.latest('dateCreated').photo
 
         returnList.append(dormRoomView(dormRoom.name, thumbnail, averageRating))
     
