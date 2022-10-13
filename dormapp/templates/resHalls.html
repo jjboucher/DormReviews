@@ -5,8 +5,17 @@
 <h1>Residence Halls</h1>
 {% for resHall in resHallsList %}
 
-	<p>{{resHall.name}},{{resHall.rating}}</p>
-	<input id="rating-system-{{resHalls.name}}" value="{{resHall.rating}}" type="number" class="rating-loading starRating" min="0" max="5" step="1">
+	<div class="card">
+  	<div class="card-body">
+    <h5 class="card-title">{{resHalls.name}}</h5>
+    <p class="card-text">Rating: {{resHalls.rating}}</p>
+	<input id=""rating-system-{{resHalls.name}} value="{{resHall.rating}}" type="number" class="rating-loading starRating" min="0" max="5">
+    <a href="resHalls/{{resHalls.name}}" class="stretched-link"></a>
+    
+  </div>
+</div>
+
+	
 {% endfor %}
 
 <script>
