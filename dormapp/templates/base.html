@@ -4,14 +4,22 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	
+	<!-- Required for static files -->
 	{% load static %}
+
+	<!-- Bootstrap and StarRating base stylesheets -->
 	<link rel="stylesheet" href="{% static 'Bootstrap5-2/css/bootstrap.min.css' %}">
 	<link rel="stylesheet" href="{% static 'StarRating/css/star-rating.min.css' %}">
 
+	<!-- jQuery, Bootstrap and StarRating base scripts -->
 	<script src="{% static 'jquery-3.6.1.min.js' %}"></script>
 	<script src="{% static 'Bootstrap5-2/js/bootstrap.min.js' %}"></script>
 	<script src="{% static 'StarRating/js/star-rating.min.js' %}"></script>
 	
+	<!-- StarRating SVG theme -->
+	<link rel="stylesheet" href="{% static 'StarRating/themes/krajee-svg/theme.min.css' %}">
+	<script src="{% static 'StarRating/themes/krajee-svg/theme.min.js' %}"></script>
+
 	<title>DormReviews</title>
 
 </head>
