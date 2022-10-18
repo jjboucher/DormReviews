@@ -26,9 +26,10 @@ def getResHalls(universityId):
             averageRating = sum(ratings) / len(ratings)
 
         thumbnail = None
-        photos = m.ResHallPhoto.objects.filter(resHall = resHall.id)
+        photos = m.ResHallPhoto.objects.filter(resHall = resHall)
         if len(photos) > 0:
             thumbnail = photos.latest('dateCreated').photo
+        print(thumbnail)
 
         returnList.append(resHallView(resHall.id, resHall.name, thumbnail, averageRating))
     
@@ -69,5 +70,5 @@ def getDormRooms(resHallId):
     return returnList
 
 def addDormRoomReview(room, rating, title, body):
-    review = m.DormHallReview(dormRoom = room, starRating = rating, reviewTitle = title, reviewBody = body)
+    review = m.DormRoomReview(dormRoom = room, starRating = rating, reviewTitle = title, reviewBody = body)
     review.save()
