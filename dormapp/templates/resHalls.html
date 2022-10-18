@@ -2,14 +2,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Residence Halls</h1>
+<h1>Residence Halls at {{universityName}}</h1>
 {% for resHall in resHallsList %}
 
 	<div class="card">
   	<div class="card-body">
     <h5 class="card-title">{{resHall.name}}</h5>
     <p class="card-text">Rating: {{resHall.rating}}</p>
-	<input id=""rating-system-{{resHall.name}} value="{{resHall.rating}}" type="number" class="rating-loading starRating" min="0" max="5">
+	<input id="rating-system-{{resHall.id}}" value="{{resHall.rating}}" type="number" class="rating-loading starRating" min="0" max="5">
     <a href="resHalls/{{resHall.name}}" class="stretched-link"></a>
     
   </div>
@@ -23,7 +23,9 @@
 		$('.starRating').each(function() {
 			$(this).rating({
 				displayOnly: true, 
-				step: 0.1
+				step: 0.1,
+				showCaption: false
+
 			});
 		});
 });
