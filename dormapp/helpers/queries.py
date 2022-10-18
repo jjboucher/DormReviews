@@ -1,11 +1,16 @@
 import dormapp.models as m
 
+#region homePage
 def getUniversities():
     universities = m.University.objects.all()
     return universities
 
+#endregion
+
+#region resHallsPage
 class resHallView():
-    def __init__(self, name, thumbnail, rating):
+    def __init__(self, id, name, thumbnail, rating):
+        self.id = id
         self.name = name
         self.thumbnail = thumbnail
         self.rating = rating
@@ -25,9 +30,14 @@ def getResHalls(universityId):
         if len(photos) > 0:
             thumbnail = photos.latest('dateCreated').photo
 
-        returnList.append(resHallView(resHall.name, thumbnail, averageRating))
+        returnList.append(resHallView(resHall.id, resHall.name, thumbnail, averageRating))
     
     return returnList
+
+def getUniversityName(universityId):
+    university = m.University.objects.get(id=universityId)
+    return university.name
+#endregion
 
 def addResHallReview(hall, rating, title, body):
     review = m.ResHallReview(resHall = hall, starRating = rating, reviewTitle = title, reviewBody = body)
