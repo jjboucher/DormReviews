@@ -1,8 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from dormapp.helpers import queries
-import uuid
-
 
 # Create your views here.
 
@@ -22,15 +20,9 @@ def resHallsPage(request):
     return render(request, 'resHalls.html', context)
 
 def dormRoomsPage(request, resHallId):
-    #if request.method =='POST':
-        #reviewTitle=request.POST['reviewTitle']
-        #rating=request.POST['rating']
-        #comments=request.POST['comments']
-
-        #queries.addResHallReview(resHallId)
-
     context = {
         'dormRoomList': queries.getDormRooms(resHallId),
+        'resHallReviewList': queries.getResHallReviews(resHallId),
         'resHallName': queries.getResHallName(resHallId),
         'resHallId': resHallId
         
@@ -42,7 +34,6 @@ def addReview(request, resHallId):
         reviewTitle = request.POST['reviewTitle']
         rating = request.POST['rating']
         body = request.POST['comments']
-        #resHallId = request.POST['resHallId']
 
         queries.addResHallReview(resHallId,rating,reviewTitle,body)
 

@@ -2,23 +2,77 @@
 
 {% block content %}
 <h1>{{resHallName}}</h1>
-<!-- {% for resHall in resHallsList %}
 
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+	Write Review
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+	aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form id="reviewForm" action="addReview" method="POST">
+				{% csrf_token %}
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticBackdropLabel">{{resHallName}} Review</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+
+					<label for="reviewTitle">Review Title:</label><br>
+					<input type="text" id="reviewTitle" name="reviewTitle"><br>
+					<label for="rating">Rating:</label><br>
+					<input type="number" id="rating" name="rating" class="rating-loading" min="0" max="5"><br>
+					<textarea id="comments" name="comments" rows="4" cosl="50">
+        			</textarea>
+					<br>
+					<input type="text" value="{{resHallId}}" id="resHallId" name="resHallId" hidden disabled>
+
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					<input type="submit" class="btn btn-primary" value="Submit">
+
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- Res Hall Reviews -->
+<h2>Reviews:</h2>
+{% for review in resHallReviewList %}
+	<div class="card">
+		<div class="card-body">
+			<h6 class="card-title">{{review.reviewTitle}}</h6>
+			<p class="card-text">{{review.dateCreated}}</p>
+			<input id="rating-system-{{review.id}}" value="{{review.starRating}}" type="number" class="rating-loading starRating" min="0" max="5">
+			<p class="card-text">{{review.reviewBody}}</p>
+		</div>
+	</div>
+{% endfor %}
+
+<!-- Dorm rooms list -->
+<h2>Dorm Rooms:</h2>
+{% for dormRoom in dormRoomList %}
 	<div class="card">
   	<div class="card-body">
-    <h5 class="card-title">{{resHall.name}}</h5>
-    <p class="card-text">Rating: {{resHall.rating}}</p>
-	<input id="rating-system-{{resHall.id}}" value="{{resHall.rating}}" type="number" class="rating-loading starRating" min="0" max="5">
-    <a href="/dormapp/{{resHall.id}}/" class="stretched-link"></a>
+    <h5 class="card-title">{{dormRoom.name}}</h5>
+    <p class="card-text">Rating: {{dormRoom.rating}}</p>
+	<input id="rating-system-{{dormRoom.id}}" value="{{dormRoom.rating}}" type="number" class="rating-loading starRating" min="0" max="5">
+    <a href="/dormapp/{{dormRoom.id}}/" class="stretched-link"></a>
     
   </div>
 </div>
-
-	
 {% endfor %}
 
 <script>
 	$(document).ready(function(){
+		
+		// Show read-only stars on each review
 		$('.starRating').each(function() {
 			$(this).rating({
 				displayOnly: true, 
@@ -27,48 +81,20 @@
 
 			});
 		});
-});
-</script> -->
 
+		// Show editable stars on add review modal
+		$('#staticBackdrop').on('shown.bs.modal', function () {
+			$('#rating').rating({
+				displayOnly: false, 
+				step: 1,
+				showCaption: false,
+				showClear: false
 
-        	
-     
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-  Write Review
-</button>
+			});
+		});
+	});
+	
 
-<!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-    	<form id="reviewForm" action="addReview" method="POST">
-        	{% csrf_token %}
-      <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">{{resHallName}} Review</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-      	
-        	<label for="reviewTitle">Review Title:</label><br>
-        	<input type="text" id="reviewTitle" name="reviewTitle"><br>
-        	<label for="rating">Rating:</label><br>
-        	<input type="number" id="rating" name="rating"><br>
-        	<textarea id="comments" name="comments" rows="4" cosl="50">
-        	</textarea>
-        	<br>
-        	<input type="text" value="{{resHallId}}" id="resHallId" name="resHallId" hidden disabled>
-        	
-        
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <input type="submit" value="Submit">
-
-      </div>
-       </form>
-    </div>
-  </div>
-</div>
+</script>
 
 {% endblock %}
