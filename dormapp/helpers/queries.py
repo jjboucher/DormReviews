@@ -1,4 +1,5 @@
 import dormapp.models as m
+import uuid
 
 #region homePage
 def getUniversities():
@@ -46,8 +47,9 @@ def getResHallName(resHallId):
     resHall = m.ResHall.objects.get(id=resHallId)
     return resHall.name
 
-def addResHallReview(hall, rating, title, body):
-    review = m.ResHallReview(resHall = hall, starRating = rating, reviewTitle = title, reviewBody = body)
+def addResHallReview(hallId, rating, title, body):
+    hall = m.ResHall.objects.get(id=hallId)
+    review = m.ResHallReview(id = uuid.uuid4(), resHall = hall, starRating = rating, reviewTitle = title, reviewBody = body)
     review.save()
 
 class dormRoomView():
