@@ -23,6 +23,6 @@ def dormRoomsPage(request, resHallId):
     # universityId=request.POST.get()
     context = {
         'dormRoomList': queries.getDormRooms(resHallId),
-        'resHallName': 'Shaw' 
+        'resHallName': queries.getResHallName(resHallId) 
     }
     return render(request, 'dormRooms.html', context)
