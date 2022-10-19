@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from dormapp.helpers import queries
+from dormapp.forms import ResHallReviewForm
 
 # Create your views here.
 
@@ -20,9 +21,15 @@ def resHallsPage(request):
     return render(request, 'resHalls.html', context)
 
 def dormRoomsPage(request, resHallId):
-    # universityId=request.POST.get()
+    form = ResHallReviewForm()
+    if request.method=="POST":
+        form= ResHallReviewForm(request.POST)
+        if form.is_valid():
+            form.save()
+
     context = {
         'dormRoomList': queries.getDormRooms(resHallId),
-        'resHallName': 'Shaw' 
+        'resHallName': queries.getResHallName(resHallId),
+        'form':form
     }
     return render(request, 'dormRooms.html', context)
