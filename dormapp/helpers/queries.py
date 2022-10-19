@@ -40,12 +40,19 @@ def getUniversityName(universityId):
     return university.name
 #endregion
 
+#region dormRoomsPage
+
+def getResHallName(resHallId):
+    resHall = m.ResHall.objects.get(id=resHallId)
+    return resHall.name
+
 def addResHallReview(hall, rating, title, body):
     review = m.ResHallReview(resHall = hall, starRating = rating, reviewTitle = title, reviewBody = body)
     review.save()
 
 class dormRoomView():
-    def __init__(self, name, thumbnail, rating):
+    def __init__(self, id, name, thumbnail, rating):
+        self.id = id
         self.name = name
         self.thumbnail = thumbnail
         self.rating = rating
@@ -69,6 +76,14 @@ def getDormRooms(resHallId):
     
     return returnList
 
+def getResHallReviews(resHallId):
+    return m.ResHallReview.objects.filter(resHall = resHallId).order_by('-dateCreated')
+
+#endregion
+
+#region dormRoom
 def addDormRoomReview(room, rating, title, body):
     review = m.DormRoomReview(dormRoom = room, starRating = rating, reviewTitle = title, reviewBody = body)
     review.save()
+
+#endregion
