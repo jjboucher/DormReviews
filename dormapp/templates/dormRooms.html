@@ -96,7 +96,7 @@
 {% for dormRoom in dormRoomList %}
 	<div class="card">
   	<div class="card-body">
-    <h5 class="card-title">{{dormRoom.name}}</h5>
+    <h5 class="card-title">{{dormRoom.roomNumber}}</h5>
     <p class="card-text">Rating: {{dormRoom.rating}}</p>
 	<input id="rating-system-{{dormRoom.id}}" value="{{dormRoom.rating}}" type="number" class="rating-loading starRating" min="0" max="5">
     <a href="/dormapp/{{dormRoom.id}}/" class="stretched-link"></a>
