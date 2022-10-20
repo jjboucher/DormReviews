@@ -53,9 +53,9 @@ def addResHallReview(hallId, rating, title, body):
     review.save()
 
 class dormRoomView():
-    def __init__(self, id, name, thumbnail, rating):
+    def __init__(self, id, roomNumber, thumbnail, rating):
         self.id = id
-        self.name = name
+        self.roomNumber = roomNumber
         self.thumbnail = thumbnail
         self.rating = rating
 
@@ -70,11 +70,11 @@ def getDormRooms(resHallId):
             averageRating = sum(ratings) / len(ratings)
 
         thumbnail = None
-        photos = m.DormRoomPhoto.objects.filter(dormRoom = dormRoom.Id)
+        photos = m.DormRoomPhoto.objects.filter(dormRoom = dormRoom.id)
         if len(photos) > 0:
             thumbnail = photos.latest('dateCreated').photo
 
-        returnList.append(dormRoomView(dormRoom.name, thumbnail, averageRating))
+        returnList.append(dormRoomView(dormRoom.id, dormRoom.roomNumber, thumbnail, averageRating))
     
     return returnList
 
