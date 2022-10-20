@@ -29,7 +29,7 @@ def getResHalls(universityId):
         thumbnail = None
         photos = m.ResHallPhoto.objects.filter(resHall = resHall)
         if len(photos) > 0:
-            thumbnail = photos.latest('dateCreated').photo
+            thumbnail = photos.earliest('dateCreated').photo
         print(thumbnail)
 
         returnList.append(resHallView(resHall.id, resHall.name, thumbnail, averageRating))
@@ -77,7 +77,7 @@ def getDormRooms(resHallId):
         thumbnail = None
         photos = m.DormRoomPhoto.objects.filter(dormRoom = dormRoom.id)
         if len(photos) > 0:
-            thumbnail = photos.latest('dateCreated').photo
+            thumbnail = photos.earliest('dateCreated').photo
 
         returnList.append(dormRoomView(dormRoom.id, dormRoom.roomNumber, thumbnail, averageRating))
     
