@@ -38,3 +38,11 @@ def addReview(request, resHallId):
         queries.addResHallReview(resHallId,rating,reviewTitle,body)
 
         return dormRoomsPage(request,resHallId)
+
+def addPhoto(request, resHallId):
+    if request.method == 'POST':
+        photo = request.POST.get('myPhoto', False)
+
+        queries.addResHallPhoto(resHallId, photo)
+
+        return dormRoomsPage(request,resHallId)

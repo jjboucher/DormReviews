@@ -3,10 +3,10 @@
 {% block content %}
 <h1>{{resHallName}}</h1>
 
-<!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
 	Write Review
 </button>
+
 
 <!-- Modal -->
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -21,7 +21,7 @@
 				</div>
 				<div class="modal-body">
 
-					<label for="reviewTitle">Review Title:</label><br>
+					<l	abel for="reviewTitle">Review Title:</label><br>
 					<input type="text" id="reviewTitle" name="reviewTitle"><br>
 					<label for="rating">Rating:</label><br>
 					<input type="number" id="rating" name="rating" class="rating-loading" min="0" max="5"><br>
@@ -42,6 +42,45 @@
 	</div>
 </div>
 
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#photoPopup">
+	Upload Photo
+</button>
+<!-- Photo -->
+<div class="modal fade" id="photoPopup" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+	aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form id="photoForm" action="addPhoto" method="POST">
+				{% csrf_token %}
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticBackdropLabel">{{resHallName}} Review</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+
+					{% comment %} <l	abel for="reviewTitle">Review Title:</label><br>
+					<input type="text" id="reviewTitle" name="reviewTitle"><br>
+					<label for="rating">Rating:</label><br>
+					<input type="number" id="rating" name="rating" class="rating-loading" min="0" max="5"><br>
+					<textarea id="comments" name="comments" rows="4" cosl="50">
+        			</textarea>
+					<br>
+					<input type="text" value="{{resHallId}}" id="resHallId" name="resHallId" hidden disabled> {% endcomment %}
+					<form action="/action_page.php">
+						<input type="file" id="myPhoto" name="myPhoto" accept="image/png, image/jpeg">
+						<input type="submit">
+					  </form>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					<input type="submit" class="btn btn-primary" value="Submit">
+
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
 <!-- Res Hall Reviews -->
 <h2>Reviews:</h2>
 {% for review in resHallReviewList %}
