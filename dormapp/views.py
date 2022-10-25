@@ -29,6 +29,15 @@ def dormRoomsPage(request, resHallId):
     }
     return render(request, 'dormRooms.html', context)
 
+def dormReviewsPage(request, dormId):
+    context = {
+        'dormReviewList': queries.getDormReviews(dormId),
+        'dormName' : queries.getDormName(dormId),
+        'dormId': dormRoomId
+
+    }
+
+
 def addReview(request, resHallId):
     if request.method == 'POST':
         reviewTitle = request.POST['reviewTitle']
