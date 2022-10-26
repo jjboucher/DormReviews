@@ -49,13 +49,14 @@ def addReview(request, resHallId):
 
         return dormRoomsPage(request,resHallId)
 
-def addDormReview(request, dormId):
+def addDormReviewPage(request,dormId):
     if request.method == 'POST':
-        reviewTitle = request.POST['reviewTitle']
-        rating = request.POST['rating']
-        body = request.POST['comments']
+        reviewTitle = request.POST.get('reviewTitle')
+        rating = request.POST.get('rating')
+        body = request.POST.get('comments')
+        # dormId = request.POST.get('dormId')
 
-        queries.addDormReview(dormId,rating,reviewTitle,body)
+        queries.addDormRoomReview(dormId,rating,reviewTitle,body)
 
         return dormReviewsPage(request,dormId)
 

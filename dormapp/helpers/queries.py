@@ -89,8 +89,9 @@ def getResHallReviews(resHallId):
 #endregion
 
 #region dormRoom
-def addDormRoomReview(room, rating, title, body):
-    review = m.DormRoomReview(dormRoom = room, starRating = rating, reviewTitle = title, reviewBody = body)
+def addDormRoomReview(dormId, rating, title, body):
+    dorm = m.DormRoom.objects.get(id=dormId)
+    review = m.DormRoomReview(id = uuid.uuid4(), dormRoom = dorm, starRating = rating, reviewTitle = title, reviewBody = body)
     review.save()
 
 def getDormReviews(dormRoomId):
