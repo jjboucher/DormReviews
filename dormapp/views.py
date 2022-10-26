@@ -38,6 +38,7 @@ def dormReviewsPage(request, dormId):
     return render(request, 'dormReviews.html', context)
 
 
+
 def addReview(request, resHallId):
     if request.method == 'POST':
         reviewTitle = request.POST['reviewTitle']
@@ -47,6 +48,17 @@ def addReview(request, resHallId):
         queries.addResHallReview(resHallId,rating,reviewTitle,body)
 
         return dormRoomsPage(request,resHallId)
+
+def addDormReview(request, dormId):
+    if request.method == 'POST':
+        reviewTitle = request.POST['reviewTitle']
+        rating = request.POST['rating']
+        body = request.POST['comments']
+
+        queries.addDormReview(dormId,rating,reviewTitle,body)
+
+        return dormReviewsPage(request,dormId)
+
 
 def addPhoto(request, resHallId):
     if request.method == 'POST':
