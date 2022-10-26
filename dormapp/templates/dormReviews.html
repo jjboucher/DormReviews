@@ -13,7 +13,7 @@
 	aria-labelledby="staticBackdropLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id="reviewForm" action="addReview" method="POST">
+			<form id="dormReviewForm" action="addDormReview" method="POST">
 				{% csrf_token %}
 				<div class="modal-header">
 					<h5 class="modal-title" id="staticBackdropLabel">{{dormName}} Review</h5>
@@ -21,14 +21,14 @@
 				</div>
 				<div class="modal-body">
 
-					<label for="reviewTitle">Review Title:</label><br>
+					<label for="dormReviewTitle">Review Title:</label><br>
 					<input type="text" id="reviewTitle" name="reviewTitle"><br>
 					<label for="rating">Rating:</label><br>
 					<input type="number" id="rating" name="rating" class="rating-loading" min="0" max="5"><br>
 					<textarea id="comments" name="comments" rows="4" cosl="50">
         			</textarea>
 					<br>
-					<input type="text" value="{{resHallId}}" id="resHallId" name="resHallId" hidden disabled>
+					<input type="text" value="{{dormId}}" id="dormId" name="dormId" hidden disabled>
 
 
 				</div>
@@ -53,12 +53,12 @@
 			<form id="photoForm" action="addPhoto" method="POST">
 				{% csrf_token %}
 				<div class="modal-header">
-					<h5 class="modal-title" id="staticBackdropLabel">{{resHallName}} Review</h5>
+					<h5 class="modal-title" id="staticBackdropLabel">{{dormName}} Review</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
 
-					{% comment %} <l	abel for="reviewTitle">Review Title:</label><br>
+					{% comment %} <label for="reviewTitle">Review Title:</label><br>
 					<input type="text" id="reviewTitle" name="reviewTitle"><br>
 					<label for="rating">Rating:</label><br>
 					<input type="number" id="rating" name="rating" class="rating-loading" min="0" max="5"><br>
