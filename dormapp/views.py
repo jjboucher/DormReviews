@@ -33,9 +33,9 @@ def dormReviewsPage(request, dormId):
     context = {
         'dormReviewList': queries.getDormReviews(dormId),
         'dormName' : queries.getDormName(dormId),
-        'dormId': dormRoomId
-
+        'dormId': dormId
     }
+    return render(request, 'dormReviews.html', context)
 
 
 def addReview(request, resHallId):

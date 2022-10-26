@@ -93,4 +93,11 @@ def addDormRoomReview(room, rating, title, body):
     review = m.DormRoomReview(dormRoom = room, starRating = rating, reviewTitle = title, reviewBody = body)
     review.save()
 
+def getDormReviews(dormRoomId):
+    return m.DormRoomReview.objects.filter(dormRoom = dormRoomId).order_by('-dateCreated')
+
+def getDormName(dormRoomId):
+    dormRoom = m.DormRoom.objects.get(id = dormRoomId)
+    return dormRoom.roomNumber
+
 #endregion

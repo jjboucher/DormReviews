@@ -58,7 +58,7 @@
 				</div>
 				<div class="modal-body">
 
-					{% comment %} <l	abel for="reviewTitle">Review Title:</label><br>
+					{% comment %} <label for="reviewTitle">Review Title:</label><br>
 					<input type="text" id="reviewTitle" name="reviewTitle"><br>
 					<label for="rating">Rating:</label><br>
 					<input type="number" id="rating" name="rating" class="rating-loading" min="0" max="5"><br>
@@ -99,7 +99,7 @@
     <h5 class="card-title">{{dormRoom.roomNumber}}</h5>
     <p class="card-text">Rating: {{dormRoom.rating}}</p>
 	<input id="rating-system-{{dormRoom.id}}" value="{{dormRoom.rating}}" type="number" class="rating-loading starRating" min="0" max="5">
-    <a href="/dormapp/{{dormRoom.id}}/" class="stretched-link"></a>
+    <a href="/dormapp/dormroom/{{dormRoom.id}}" class="stretched-link"></a>
     
   </div>
 </div>
