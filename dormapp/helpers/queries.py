@@ -119,4 +119,7 @@ def getDormName(dormRoomId):
     dormRoom = m.DormRoom.objects.get(id = dormRoomId)
     return dormRoom.roomNumber
 
+def getDormPhotos(dormRoomId):
+    return m.DormRoomPhoto.objects.filter(dormRoom = dormRoomId).order_by('dateCreated')
+
 #endregion

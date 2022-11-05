@@ -33,9 +33,13 @@ def dormRoomsPage(request, resHallId):
     return render(request, 'dormRooms.html', context)
 
 def dormReviewsPage(request, dormId):
+    dormPhotos = queries.getDormPhotos(dormId)
+
     context = {
         'dormReviewList': queries.getDormReviews(dormId),
-        'dormName' : queries.getDormName(dormId),
+        'dormName': queries.getDormName(dormId),
+        'dormPhotos': dormPhotos,
+        'photoCount': dormPhotos.count(),
         'dormId': dormId
     }
     return render(request, 'dormReviews.html', context)
