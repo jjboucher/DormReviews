@@ -1,14 +1,80 @@
 {% extends 'base.html' %}
-
 {% block content %}
-<h1>{{resHallName}}</h1>
+{% load static %}
 
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+<div class="row">
+	<div class="col">
+		<!-- Res Hall Name, buttons -->
+		<h2>{{resHallName}}</h2>
+
+		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
 	Write Review
-</button>
+		</button>
+		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#photoPopup">
+			Upload Photo
+		</button>
+	</div>
+	<div class="col">
+		<!-- Photo Carousel -->
+		<div id="resHallCarousel" class="carousel slide" data-bs-ride="false">
+			<div class="carousel-indicators">
+			{% for photo in resHallPhotos %}
+				<button type="button" data-bs-target="#resHallCarousel" data-bs-slide-to="{{forloop.counter0}}" class="active" aria-current="true" aria-label="Slide {{forloop.counter}}"></button>
+			{% endfor %}
+			</div>
+			<div class="carousel-inner">
+			{% for photo in resHallPhotos %}
+				<div class="carousel-item{% if forloop.first %} active{% endif %}">
+					<img src="{% static photo.photo %}" class="d-block w-100" alt="Photo {{forloop.counter}}">
+				</div>
+			{% endfor %}
+			</div>
+			<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Previous</span>
+			</button>
+			<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+				<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Next</span>
+			</button>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col">
+		<!-- Res Hall Reviews -->
+		<h2>Reviews:</h2>
+		{% for review in resHallReviewList %}
+			<div class="card">
+				<div class="card-body">
+					<h6 class="card-title">{{review.reviewTitle}}</h6>
+					<p class="card-text">{{review.dateCreated}}</p>
+					<input id="rating-system-{{review.id}}" value="{{review.starRating}}" type="number" class="rating-loading starRating" min="0" max="5">
+					<p class="card-text">{{review.reviewBody}}</p>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+	<div class="col">
+		<!-- Dorm Rooms List-->
+		<h2>Dorm Rooms:</h2>
+		{% for dormRoom in dormRoomList %}
+			<div class="card">
+				<div class="card-body">
+				<img src="{% static dormRoom.thumbnail %}" alt="{{dormRoom.roomNumber}}"
+					style="width:300px;height:200px"/>
+				<h5 class="card-title">{{dormRoom.roomNumber}}</h5>
+				<p class="card-text">Rating: {{dormRoom.rating}}</p>
+				<input id="rating-system-{{dormRoom.id}}" value="{{dormRoom.rating}}" type="number" class="rating-loading starRating" min="0" max="5">
+				<a href="/dormapp/{{dormRoom.id}}/reviews" class="stretched-link"></a>
+				
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+</div>
 
-
-<!-- Modal -->
+<!-- Write Review Modal -->
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
 	aria-labelledby="staticBackdropLabel" aria-hidden="true">
 	<div class="modal-dialog">
@@ -42,10 +108,7 @@
 	</div>
 </div>
 
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#photoPopup">
-	Upload Photo
-</button>
-<!-- Photo -->
+<!-- Upload Photo Modal -->
 <div class="modal fade" id="photoPopup" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
 	aria-labelledby="staticBackdropLabel" aria-hidden="true">
 	<div class="modal-dialog">
@@ -78,32 +141,7 @@
 		</div>
 	</div>
 </div>
-<!-- Res Hall Reviews -->
-<h2>Reviews:</h2>
-{% for review in resHallReviewList %}
-	<div class="card">
-		<div class="card-body">
-			<h6 class="card-title">{{review.reviewTitle}}</h6>
-			<p class="card-text">{{review.dateCreated}}</p>
-			<input id="rating-system-{{review.id}}" value="{{review.starRating}}" type="number" class="rating-loading starRating" min="0" max="5">
-			<p class="card-text">{{review.reviewBody}}</p>
-		</div>
-	</div>
-{% endfor %}
 
-<!-- Dorm rooms list -->
-<h2>Dorm Rooms:</h2>
-{% for dormRoom in dormRoomList %}
-	<div class="card">
-  	<div class="card-body">
-    <h5 class="card-title">{{dormRoom.roomNumber}}</h5>
-    <p class="card-text">Rating: {{dormRoom.rating}}</p>
-	<input id="rating-system-{{dormRoom.id}}" value="{{dormRoom.rating}}" type="number" class="rating-loading starRating" min="0" max="5">
-    <a href="/dormapp/{{dormRoom.id}}/reviews" class="stretched-link"></a>
-    
-  </div>
-</div>
-{% endfor %}
 
 <script>
 	$(document).ready(function(){

@@ -10,8 +10,7 @@ def index(request):
     }
     return render(request, "homePage.html", context)
 
-def resHallsPage(request):
-    universityId=request.POST.get('universities')
+def resHallsPage(request, universityId):
 
     context = {
         'resHallsList': queries.getResHalls(universityId),
@@ -20,10 +19,14 @@ def resHallsPage(request):
     return render(request, 'resHalls.html', context)
 
 def dormRoomsPage(request, resHallId):
+    resHallPhotos = queries.getResHallPhotos(resHallId)
+
     context = {
         'dormRoomList': queries.getDormRooms(resHallId),
         'resHallReviewList': queries.getResHallReviews(resHallId),
         'resHallName': queries.getResHallName(resHallId),
+        'resHallPhotos': resHallPhotos,
+        'photoCount': resHallPhotos.count(),
         'resHallId': resHallId
         
     }

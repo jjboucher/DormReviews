@@ -2,9 +2,24 @@ import dormapp.models as m
 import uuid
 
 #region homePage
+class universityView():
+    def __init__(self, id, name, reviewCount):
+        self.id = id
+        self.name = name
+        self.reviewCount = reviewCount
+
 def getUniversities():
     universities = m.University.objects.all()
-    return universities
+    universityList = []
+    for university in universities:
+        dormReviewCount = m.DormRoomReview.objects.filter(dormRoom__resHall__university = university).count()
+        resHallReviewCount = m.ResHallReview.objects.filter(resHall__university = university).count()
+
+        reviewCount = dormReviewCount + resHallReviewCount
+        
+        universityList.append(universityView(id=university.id, name=university.name, reviewCount=reviewCount))
+        
+    return universityList
 
 #endregion
 
@@ -85,6 +100,9 @@ def getDormRooms(resHallId):
 
 def getResHallReviews(resHallId):
     return m.ResHallReview.objects.filter(resHall = resHallId).order_by('-dateCreated')
+
+def getResHallPhotos(resHallId):
+    return m.ResHallPhoto.objects.filter(resHall = resHallId).order_by('dateCreated')
 
 #endregion
 

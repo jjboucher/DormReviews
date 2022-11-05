@@ -20,14 +20,21 @@
 	<link rel="stylesheet" href="{% static 'StarRating/themes/krajee-svg/theme.min.css' %}">
 	<script src="{% static 'StarRating/themes/krajee-svg/theme.min.js' %}"></script>
 
+	<!-- Our CSS file -->
+	<link rel="stylesheet" href="{% static 'css/index.css' %}">
+
 	<title>DormReviews</title>
 
 </head>
 <body>
-	<h1> DormReviews</h1>
-	{% block content %}
-	replace me
-	{% endblock %}
+	<header class="d-flex justify-content-center py-3">
+		<h1><a class="link-dark no-underline" href="/dormapp/">DormReviews</a></h1>
+	  </header>
+	<div class="container">
+		{% block content %}
+		replace me
+		{% endblock %}
+	</div>
 </body>
 
 

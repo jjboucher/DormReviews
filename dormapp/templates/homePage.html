@@ -1,7 +1,32 @@
 {% extends 'base.html' %}
-
 {% block content %}
-<div class="universityDropDown">
+
+<style>
+	ul.not-too-wide {
+		width: min-content;
+		min-width: 60%;
+	}
+
+	a.big-names {
+		font-size: 18px;
+	}
+</style>
+
+<h2>Select your college/university:</h2>
+<ul class="list-group not-too-wide">
+{% for university in universitiesList %}
+	<li class="list-group-item d-flex justify-content-between align-items-center">
+		<a class="stretched-link link-dark big-names" href="/dormapp/{{university.id}}/resHalls">
+			{{university.name}}
+		</a>
+		<span class="badge bg-secondary rounded-pill">{{university.reviewCount}} reviews</span>
+		
+	</li>
+{% endfor %}
+</ul>
+
+
+<!-- <div class="universityDropDown">
 	<form action="resHalls" method="POST">{% csrf_token %}
 		<label for="universities">Select a school</label>
 		<select name="universities" id="universities">
@@ -14,7 +39,7 @@
 	    <input type="submit" value="Submit">
 	</form>
 
-</div>
+</div> -->
 
 
 {% endblock %}
