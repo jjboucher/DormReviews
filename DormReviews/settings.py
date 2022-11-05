@@ -26,7 +26,8 @@ SECRET_KEY = 'django-insecure-ze3_gce=pdr4w4rffh1hm7lxfnu!0m_gln493@j)2o(f1+-4h6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# Allows all local IPs to host the website
+ALLOWED_HOSTS = ['192.168.{}.{}'.format(i,j) for i in range(256) for j in range(256)]
 
 
 # Application definition
