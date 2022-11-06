@@ -68,7 +68,7 @@ def addDormReviewPage(request,dormId):
         return dormReviewsPage(request,dormId)
 
 
-def addPhoto(request, resHallId):
+def addResHallPhoto(request, resHallId):
     if request.method == 'POST':
         
         photo = request.FILES.get('myPhoto', False)
@@ -76,3 +76,11 @@ def addPhoto(request, resHallId):
         queries.addResHallPhoto(resHallId, photo)
 
         return dormRoomsPage(request,resHallId)
+
+def addDormRoomPhoto(request, dormRoomId):
+    if request.method == 'POST':
+        photo = request.FILES.get('myPhoto', False)
+        assert(photo)
+        queries.addDormRoomPhoto(dormRoomId, photo)
+
+        return dormReviewsPage(request, dormRoomId)

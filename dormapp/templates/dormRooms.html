@@ -122,14 +122,14 @@
 	aria-labelledby="staticBackdropLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id="photoForm" action="addPhoto" method="POST" enctype="multipart/form-data">
+			<form id="photoForm" action="addResHallPhoto" method="POST" enctype="multipart/form-data">
 				{% csrf_token %}
 				<div class="modal-header">
 					<h5 class="modal-title" id="staticBackdropLabel">{{resHallName}} Review</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
-					<input type="file" id="myPhoto" name="myPhoto" accept="image/png, image/jpeg">
+					<input type="file" id="myPhoto" name="myPhoto" accept="image/png, image/jpeg, image/gif">
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

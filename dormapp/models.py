@@ -41,6 +41,6 @@ class ResHallPhoto(models.Model):
 
 class DormRoomPhoto(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    dormRoom = models.ForeignKey(ResHall, on_delete=models.CASCADE)
+    dormRoom = models.ForeignKey(DormRoom, on_delete=models.CASCADE)
     photo = models.ImageField(upload_to='dorm-room-photos')
     dateCreated = models.DateTimeField(auto_now=True)
