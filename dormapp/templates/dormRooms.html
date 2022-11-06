@@ -122,7 +122,7 @@
 	aria-labelledby="staticBackdropLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id="photoForm" action="addPhoto" method="POST">
+			<form id="photoForm" action="addPhoto" method="POST" enctype="multipart/form-data">
 				{% csrf_token %}
 				<div class="modal-header">
 					<h5 class="modal-title" id="staticBackdropLabel">{{resHallName}} Review</h5>

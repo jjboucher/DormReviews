@@ -72,7 +72,7 @@ def addPhoto(request, resHallId):
     if request.method == 'POST':
         
         photo = request.FILES.get('myPhoto', False)
-
+        assert(photo)
         queries.addResHallPhoto(resHallId, photo)
 
         return dormRoomsPage(request,resHallId)
