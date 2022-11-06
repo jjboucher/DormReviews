@@ -70,7 +70,8 @@ def addDormReviewPage(request,dormId):
 
 def addPhoto(request, resHallId):
     if request.method == 'POST':
-        photo = request.POST.get('myPhoto', False)
+        
+        photo = request.FILES.get('myPhoto', False)
 
         queries.addResHallPhoto(resHallId, photo)
 

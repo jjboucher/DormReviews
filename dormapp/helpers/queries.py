@@ -67,9 +67,9 @@ def addResHallReview(hallId, rating, title, body):
     review = m.ResHallReview(id = uuid.uuid4(), resHall = hall, starRating = rating, reviewTitle = title, reviewBody = body)
     review.save()
 
-def addResHallPhoto(hallId, photo):
+def addResHallPhoto(hallId, uploadedPhoto):
     hall = m.ResHall.objects.get(id=hallId)
-    photo = m.ResHallPhoto(resHall = hall, photo = photo)
+    photo = m.ResHallPhoto(resHall = hall, photo = uploadedPhoto)
     photo.save()
 
 class dormRoomView():
