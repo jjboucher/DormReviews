@@ -2,6 +2,26 @@
 {% block content %}
 {% load static %}
 
+<style>
+	.carousel .carousel-item {
+	height: 300px;
+	}
+
+	.carousel-item img {
+		position: absolute;
+		object-fit: contain;
+		top: 0;
+		left: 0;
+		height: 300px;
+	}
+
+	.carousel {
+		background-color: darkgray;
+		border-radius: 20px;
+		overflow: hidden;
+	}
+</style>
+
 <div class="row">
 	<div class="col">
 		<!-- Res Hall Name, buttons -->
@@ -25,7 +45,7 @@
 				<div class="carousel-inner">
 				{% for photo in resHallPhotos %}
 					<div class="carousel-item{% if forloop.first %} active{% endif %}">
-						<img src="/media/{{photo.photo}}" class="d-block w-100" alt="Photo {{forloop.counter}}">
+						<img src="/media/{{photo.photo}}" class="d-block w-100 carousel-image" alt="Photo {{forloop.counter}}">
 					</div>
 				{% endfor %}
 				</div>
@@ -66,7 +86,7 @@
 		{% for dormRoom in dormRoomList %}
 			<div class="card">
 				<div class="card-body">
-				<img src="{% static dormRoom.thumbnail %}" alt="{{dormRoom.roomNumber}}"
+				<img src="/media/{{dormRoom.thumbnail}}" alt="{{dormRoom.roomNumber}}"
 					style="width:300px;height:200px"/>
 				<h5 class="card-title">{{dormRoom.roomNumber}}</h5>
 				<p class="card-text">Rating: {{dormRoom.rating}}</p>

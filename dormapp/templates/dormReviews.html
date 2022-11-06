@@ -2,6 +2,26 @@
 {% block content %}
 {% load static %}
 
+<style>
+	.carousel .carousel-item {
+	height: 300px;
+	}
+
+	.carousel-item img {
+		position: absolute;
+		object-fit: contain;
+		top: 0;
+		left: 0;
+		height: 300px;
+	}
+
+	.carousel {
+		background-color: darkgray;
+		border-radius: 20px;
+		overflow: hidden;
+	}
+	</style>
+
 <div class="row">
 	<div class="col">
 		<!-- Room number and buttons-->

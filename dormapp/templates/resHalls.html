@@ -1,14 +1,13 @@
-
 {% extends 'base.html' %}
-
 {% block content %}
+{% load static %}
+
 <h2>Residence Halls at {{universityName}}</h2>
 {% for resHall in resHallsList %}
 
 	<div class="card">
   	<div class="card-body">
-	{% load static %}
-	<img src="{% static resHall.thumbnail %}" alt=resHall.name
+	<img src="/media/{{resHall.thumbnail}}" alt=resHall.name
 		style="width:300px;height:200px"/>
     <h5 class="card-title">{{resHall.name}}</h5>
     <p class="card-text">Rating: {{resHall.rating}}</p>
