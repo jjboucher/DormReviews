@@ -106,7 +106,7 @@ def getResHallPhotos(resHallId):
 
 #endregion
 
-#region dormRoom
+#region dormRoomReviews
 def addDormRoomReview(dormId, rating, title, body):
     dorm = m.DormRoom.objects.get(id=dormId)
     review = m.DormRoomReview(id = uuid.uuid4(), dormRoom = dorm, starRating = rating, reviewTitle = title, reviewBody = body)
