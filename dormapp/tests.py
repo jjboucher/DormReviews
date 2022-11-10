@@ -1,4 +1,6 @@
 from django.test import TestCase, Client
+from django.urls import reverse, resolve
+from .import views
 import dormapp.models as m
 import datetime
 from dormapp.helpers import queries as q
@@ -365,3 +367,32 @@ class ComponentTesting(TestCase):
         self.assertEqual(d.reviewTitle, testreview.reviewTitle)
         self.assertEqual(d.starRating, testreview.starRating)
         self.assertEqual(d.reviewBody, testreview.reviewBody)
+
+class indexViewSystemTest(TestCase):
+
+	def setUp(self):
+		m.University.objects.create(name="Syracuse")
+		m.University.objects.create(name="Duke")
+		m.University.objects.create(name="Scranton")
+
+		
+	def test_indexView_url_exists_for_indexView(self):
+		response = self.client.get(reverse('index'))
+		self.assertEqual(response.status_code,200)
+
+	def test_indexView_url_maps_to_indexView(self):
+		url=reverse('index')
+		self.assertEqual(resolve(url).func,views.index)
+	
+
+	def test_indexView_uses_correct_template(self):
+		response= self.client.get(reverse('index'))
+		self.assertEqual(response.status_code,200)
+		self.assertTemplateUsed(response,'homePage.html')
+		self.assertTemplateUsed(response,'base.html')
+
+	def test_indexView_contains_all_universities(self):
+		response= self.client.get(reverse('index'))
+		self.assertEqual(response.status_code,200)
+		self.assertTrue('universitiesList' in response.context)
+		self.assertEqual(len(response.context['universitiesList']),3)
