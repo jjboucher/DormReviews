@@ -1,4 +1,4 @@
-import django.test
+from django.test import TestCase, Client
 import dormapp.models as m
 import datetime
 from dormapp.helpers import queries as q
@@ -30,7 +30,7 @@ dormRoomPhotoA1y2 = None
 dormRoomPhotoB1x1 = None
 
 # Unit tests for queries
-class QueriesUnitTests(django.test.TestCase):
+class QueriesUnitTests(TestCase):
 
     # set up initial database values (will be reset for each test)
     def setUp(self):
@@ -285,3 +285,83 @@ class QueriesUnitTests(django.test.TestCase):
 
         # test whether resHallPhoto was added to DB table
         self.assertEqual(testList, testQuery)
+
+# Component Tests.
+class ComponentTesting(TestCase):
+    def setUp(self):
+        testu = m.University.objects.create(name="testu")
+        testhall = m.ResHall.objects.create(name="testhall", university = testu)
+        testroom = m.DormRoom.objects.create(roomNumber="555", resHall=testhall)
+        testu.save()
+        testhall.save()
+        testroom.save()
+
+    def test_reshall_photo_added_to_db(self):
+        c = Client(HTTP_USER_AGENT="Mozilla/5.0", enforce_csrf_checks=False)
+        testhall = m.ResHall.objects.get(name='testhall')
+
+        with open('./media/res-hall-photos/shaw.jpg', 'rb') as fp:
+            response = c.post('/dormapp/' + str(testhall.id) + '/addResHallPhoto', {'myPhoto': fp})
+        
+        self.assertEqual(response.status_code, 200)
+        self.assertIs(m.ResHallPhoto.objects.get(resHall=testhall) == False, False)
+    
+    def test_dormroom_photo_added_to_db(self):
+        c = Client(HTTP_USER_AGENT="Mozilla/5.0", enforce_csrf_checks=False)
+        testroom = m.DormRoom.objects.get(roomNumber='555')
+
+        with open('./media/res-hall-photos/shaw.jpg', 'rb') as fp:
+            response = c.post('/dormapp/' + str(testroom.id) + '/addDormRoomPhoto', {'myPhoto': fp})
+        
+        self.assertEqual(response.status_code, 200)
+        self.assertIs(m.DormRoomPhoto.objects.get(dormRoom=testroom) == False, False)
+    
+    def test_reshall_review_added_to_db(self):
+        c = Client(HTTP_USER_AGENT="Mozilla/5.0", enforce_csrf_checks=False)
+        testhall = m.ResHall.objects.get(name='testhall')
+        title = 'test title'
+        rating = 5
+        body = 'test review'
+
+        response = c.post('/dormapp/' + str(testhall.id) + '/addReview', {
+            'reviewTitle': title,
+            'rating': rating,
+            'comments': body,
+            })
+        
+        self.assertEqual(response.status_code, 200)
+        self.assertIs(m.ResHallReview.objects.get(resHall=testhall) == False, False)
+
+        testreview = m.ResHallReview.objects.all()[0]
+        q.addResHallReview(testhall.id, rating, title, body)
+        r = m.ResHallReview.objects.all()[1]
+        
+        self.assertEqual(r.resHall, testreview.resHall)
+        self.assertEqual(r.reviewTitle, testreview.reviewTitle)
+        self.assertEqual(r.starRating, testreview.starRating)
+        self.assertEqual(r.reviewBody, testreview.reviewBody)
+    
+    def test_dormroom_review_added_to_db(self):
+        c = Client(HTTP_USER_AGENT="Mozilla/5.0", enforce_csrf_checks=False)
+        testroom = m.DormRoom.objects.get(roomNumber='555')
+        title = 'test title'
+        rating = 5
+        body = 'test review'
+
+        response = c.post('/dormapp/' + str(testroom.id) + '/addDormReview', {
+            'reviewTitle': title,
+            'rating': rating,
+            'comments': body,
+            })
+        
+        self.assertEqual(response.status_code, 200)
+        self.assertIs(m.DormRoomReview.objects.get(dormRoom=testroom) == False, False)
+
+        testreview = m.DormRoomReview.objects.all()[0]
+        q.addDormRoomReview(testroom.id, rating, title, body)
+        d = m.DormRoomReview.objects.all()[1]
+        
+        self.assertEqual(d.dormRoom, testreview.dormRoom)
+        self.assertEqual(d.reviewTitle, testreview.reviewTitle)
+        self.assertEqual(d.starRating, testreview.starRating)
+        self.assertEqual(d.reviewBody, testreview.reviewBody)
