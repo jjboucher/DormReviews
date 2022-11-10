@@ -229,10 +229,10 @@ class QueriesUnitTests(TestCase):
         testQuery1 = list(m.DormRoomReview.objects.filter(dormRoom=dormRoomB1x).order_by('dateCreated').values_list('reviewTitle', flat=True))
         testQuery2 = list(m.DormRoomReview.objects.filter(dormRoom=dormRoomA1y).order_by('dateCreated').values_list('reviewTitle', flat=True))
 
-        # test whether resHallReview was added to DB table with existing data
+        # test whether dormRoomReview was added to DB table with existing data
         self.assertEqual(testList1, testQuery1)
 
-        # test whether resHallReview was added to empty DB table
+        # test whether dormRoomReview was added to empty DB table
         self.assertEqual(testList2, testQuery2)
 
     def test_getDormReviews(self):
@@ -283,7 +283,7 @@ class QueriesUnitTests(TestCase):
         testList = ['dorm-room-photos/test.jpg']
         testQuery = list(m.DormRoomPhoto.objects.filter(dormRoom=dormRoomA1x).order_by('dateCreated').values_list('photo', flat=True))
 
-        # test whether resHallPhoto was added to DB table
+        # test whether dormRoomPhoto was added to DB table
         self.assertEqual(testList, testQuery)
 
 # Component Tests.
