@@ -45,7 +45,6 @@ def getResHalls(universityId):
         photos = m.ResHallPhoto.objects.filter(resHall = resHall)
         if len(photos) > 0:
             thumbnail = photos.earliest('dateCreated').photo
-        print(thumbnail)
 
         returnList.append(resHallView(resHall.id, resHall.name, thumbnail, averageRating))
     

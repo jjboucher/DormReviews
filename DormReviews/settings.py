@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-ze3_gce=pdr4w4rffh1hm7lxfnu!0m_gln493@j)2o(f1+-4h6
 DEBUG = True
 
 # Allows all local IPs to host the website
-ALLOWED_HOSTS = ['.localhost', '127.0.0.1', '[::1]'] + ['192.168.1.{}'.format(i) for i in range(256)]
+ALLOWED_HOSTS = ['*'] #['.localhost', '127.0.0.1', '[::1]'] + ['192.168.1.{}'.format(i) for i in range(256)]
 
 
 # Application definition
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'test_without_migrations',
 ]
 
 MIDDLEWARE = [
