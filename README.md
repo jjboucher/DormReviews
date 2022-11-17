@@ -1,5 +1,17 @@
 # DormReviews
 
+For software testers:
+fork this repository, then cd into the parent DormReviews directory and run:
+
+  python manage.py migrate
+
+Then run:
+ 
+  python manage.py runserver
+  
+You should be able to access the app by typing localhost:8000/dormapp/ in your browser.
+
+
 # To run/create the database locally you can just run python manage.py migrate
 
 # TO run the app on a localhost server:
