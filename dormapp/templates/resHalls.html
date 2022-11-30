@@ -3,6 +3,11 @@
 {% load static %}
 
 <h2>Residence Halls at {{universityName}}</h2>
+
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addResHallPopup">
+	Add Residence Hall
+</button>
+
 {% for resHall in resHallsList %}
 
 	<div class="card">
@@ -16,11 +21,38 @@
 	<input id="rating-system-{{resHall.id}}" value="{{resHall.rating}}" type="number" class="rating-loading starRating" min="0" max="5">
     <a href="/dormapp/{{resHall.id}}/dormRooms" class="stretched-link"></a>
     
-  </div>
-</div>
+  	</div>
+	</div>
 
 	
 {% endfor %}
+
+<!-- New ResHall Modal -->
+<div class="modal fade" id="addResHallPopup" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+	aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form id="addResHallForm" action="addResHall" method="POST" autocomplete="off">
+				{% csrf_token %}
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticBackdropLabel">Add Residence Hall to {{universityName}}</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="name">Name:</label><br>
+						<input class="form-control" type="text" id="name" name="name" autofocus><br>
+					</div>
+					<input type="text" class="" value="{{universityId}}" id="universityId" name="universityId" hidden disabled>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					<input type="submit" class="btn btn-primary" value="Submit">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
 
 <script>
 	$(document).ready(function(){
@@ -32,6 +64,11 @@
 
 			});
 		});
+
+		// Add reshall modal
+		$('#addResHallPopup').on('shown.bs.modal', function() {
+			$(this).find('[autofocus]').focus();
+		})
 });
 </script>
 {% endblock %}

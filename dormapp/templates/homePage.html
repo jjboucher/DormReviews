@@ -25,21 +25,44 @@
 {% endfor %}
 </ul>
 
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUniversityPopup">
+	Add University
+</button>
 
-<!-- <div class="universityDropDown">
-	<form action="resHalls" method="POST">{% csrf_token %}
-		<label for="universities">Select a school</label>
-		<select name="universities" id="universities">
-		{% for universities in universitiesList %}
-			<option value= {{universities.id}}>{{ universities.name }}</option>
-		
-	   
-	    {% endfor %}
-	    </select>
-	    <input type="submit" value="Submit">
-	</form>
+<!-- New University Modal -->
+<div class="modal fade" id="addUniversityPopup" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+	aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form id="addUniversityForm" action="addUniversity" method="POST" autocomplete="off">
+				{% csrf_token %}
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticBackdropLabel">Add University</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="name">Name:</label><br>
+						<input class="form-control" type="text" id="name" name="name" autofocus><br>
+					</div>
+					<!--<input type="text" class="" value="{{universityId}}" id="universityId" name="universityId" hidden disabled>-->
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					<input type="submit" class="btn btn-primary" value="Submit">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
 
-</div> -->
-
+<script>
+$(document).ready(function(){
+	// Add dorm room modal
+	$('#addUniversityPopup').on('shown.bs.modal', function() {
+		$(this).find('[autofocus]').focus();
+	})
+});
+</script>
 
 {% endblock %}

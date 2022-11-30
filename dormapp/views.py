@@ -10,13 +10,30 @@ def index(request):
     }
     return render(request, "homePage.html", context)
 
+def addUniversityPage(request):
+    if request.method == 'POST':
+        name = request.POST['name']
+
+        queries.addUniversity(name)
+
+        return index(request)
+
 def resHallsPage(request, universityId):
 
     context = {
         'resHallsList': queries.getResHalls(universityId),
-        'universityName': queries.getUniversityName(universityId)
+        'universityName': queries.getUniversityName(universityId),
+        'universityId': universityId
     }
     return render(request, 'resHalls.html', context)
+
+def addResHallPage(request, universityId):
+    if request.method == 'POST':
+        name = request.POST['name']
+
+        queries.addResHall(universityId, name)
+
+        return resHallsPage(request, universityId)
 
 def dormRoomsPage(request, resHallId):
     resHallPhotos = queries.getResHallPhotos(resHallId)
@@ -32,6 +49,14 @@ def dormRoomsPage(request, resHallId):
     }
     return render(request, 'dormRooms.html', context)
 
+def addDormRoomPage(request, resHallId):
+    if request.method == 'POST':
+        roomNumber = request.POST['roomNumber']
+
+        queries.addDormRoom(resHallId, roomNumber)
+
+        return dormRoomsPage(request, resHallId)
+
 def dormReviewsPage(request, dormId):
     dormPhotos = queries.getDormPhotos(dormId)
 
@@ -43,8 +68,6 @@ def dormReviewsPage(request, dormId):
         'dormId': dormId
     }
     return render(request, 'dormReviews.html', context)
-
-
 
 def addReview(request, resHallId):
     if request.method == 'POST':

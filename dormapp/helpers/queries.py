@@ -21,6 +21,9 @@ def getUniversities():
         
     return universityList
 
+def addUniversity(name):
+    university = m.University(id = uuid.uuid4(), name = name)
+    university.save()
 #endregion
 
 #region resHallsPage
@@ -53,6 +56,12 @@ def getResHalls(universityId):
 def getUniversityName(universityId):
     university = m.University.objects.get(id=universityId)
     return university.name
+
+def addResHall(universityId, name):
+    university = m.University.objects.get(id=universityId)
+    resHall = m.ResHall(id = uuid.uuid4(), university = university, name = name)
+    resHall.save()
+
 #endregion
 
 #region dormRoomsPage
@@ -70,6 +79,11 @@ def addResHallPhoto(hallId, uploadedPhoto):
     hall = m.ResHall.objects.get(id=hallId)
     photo = m.ResHallPhoto(resHall = hall, photo = uploadedPhoto)
     photo.save()
+
+def addDormRoom(hallId, roomNumber):
+    resHall = m.ResHall.objects.get(id=hallId)
+    dormRoom = m.DormRoom(id = uuid.uuid4(), resHall = resHall, roomNumber = roomNumber)
+    dormRoom.save()
 
 class dormRoomView():
     def __init__(self, id, roomNumber, thumbnail, rating):

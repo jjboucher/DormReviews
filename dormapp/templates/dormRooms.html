@@ -32,6 +32,9 @@
 		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#photoPopup">
 			Upload Photo
 		</button>
+		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDormRoomPopup">
+			Add Dorm Room
+		</button>
 	</div>
 	<div class="col">
 		<!-- Photo Carousel -->
@@ -162,6 +165,32 @@
 	</div>
 </div>
 
+<!-- New Dorm Room Modal -->
+<div class="modal fade" id="addDormRoomPopup" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+	aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form id="addDormRoomForm" action="addDormRoom" method="POST" autocomplete="off">
+				{% csrf_token %}
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticBackdropLabel">Add Dorm Room to {{resHallName}}</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="roomNumber">Room number:</label><br>
+						<input class="form-control" type="text" id="roomNumber" name="roomNumber" autofocus><br>
+					</div>
+					<input type="text" class="" value="{{resHallId}}" id="resHallId" name="resHallId" hidden disabled>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					<input type="submit" class="btn btn-primary" value="Submit">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
 
 <script>
 	$(document).ready(function(){
@@ -190,6 +219,11 @@
 			// autofocus on title field
 			$(this).find('[autofocus]').focus();
 		});
+		
+		// Add dorm room modal
+		$('#addDormRoomPopup').on('shown.bs.modal', function() {
+			$(this).find('[autofocus]').focus();
+		})
 
 	});
 </script>
