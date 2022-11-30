@@ -1,5 +1,26 @@
 # DormReviews
 
+For software testers:
+
+1. fork this repository
+
+2. run pip install django
+3. run pip install Pillow
+4. run pip install django-test-without-migrations
+
+5. change directory (cd) to the parent DormReviews directory and run:
+
+  python manage.py migrate
+
+6. Then run:
+ 
+  python manage.py runserver
+  
+You should be able to access the app by typing localhost:8000/dormapp/ in your browser.
+
+
+
+
 # To run/create the database locally you can just run python manage.py migrate
 
 # TO run the app on a localhost server:
