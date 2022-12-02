@@ -17,7 +17,7 @@
 		style="width:300px;height:200px"/>
 	{% endif %}
     <h5 class="card-title">{{resHall.name}}</h5>
-    <p class="card-text">Rating: {{resHall.rating}}</p>
+    <p class="card-text">Average rating: {{resHall.rating}}</p>
 	<input id="rating-system-{{resHall.id}}" value="{{resHall.rating}}" type="number" class="rating-loading starRating" min="0" max="5">
     <a href="/dormapp/{{resHall.id}}/dormRooms" class="stretched-link"></a>
     

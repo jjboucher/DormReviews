@@ -42,7 +42,7 @@ def getResHalls(universityId):
         
         averageRating = 0
         if len(ratings) > 0:
-            averageRating = sum(ratings) / len(ratings)
+            averageRating = round(sum(ratings) / len(ratings), 1)
 
         thumbnail = None
         photos = m.ResHallPhoto.objects.filter(resHall = resHall)
@@ -100,7 +100,7 @@ def getDormRooms(resHallId):
     
         averageRating = 0
         if len(ratings) > 0:
-            averageRating = sum(ratings) / len(ratings)
+            averageRating = round(sum(ratings) / len(ratings), 1)
 
         thumbnail = None
         photos = m.DormRoomPhoto.objects.filter(dormRoom = dormRoom.id)

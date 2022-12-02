@@ -94,7 +94,7 @@
 					style="width:300px;height:200px"/>
 				{% endif %}
 				<h5 class="card-title">{{dormRoom.roomNumber}}</h5>
-				<p class="card-text">Rating: {{dormRoom.rating}}</p>
+				<p class="card-text">Average rating: {{dormRoom.rating}}</p>
 				<input id="rating-system-{{dormRoom.id}}" value="{{dormRoom.rating}}" type="number" class="rating-loading starRating" min="0" max="5">
 				<a href="/dormapp/{{dormRoom.id}}/reviews" class="stretched-link"></a>
 				
