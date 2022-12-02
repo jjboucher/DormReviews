@@ -2,7 +2,10 @@
 
 from django.db import migrations
 
+# create test data for database upon initial "python manage.py migrate" command
 def createTestData(apps, schema_editor):
+    
+    # get models from app
     university = apps.get_model('dormapp', 'University')
     resHall = apps.get_model('dormapp', 'ResHall')
     dormRoom = apps.get_model('dormapp', 'DormRoom')
@@ -11,18 +14,23 @@ def createTestData(apps, schema_editor):
     dormRoomReview = apps.get_model('dormapp', 'DormRoomReview')
     dormRoomPhoto = apps.get_model('dormapp', 'DormRoomPhoto')
 
+    # create universities
     syracuseU = university.objects.create(name='Syracuse University')
     cornellU = university.objects.create(name='Cornell University')
 
+    # create Syracuse University residence halls
     shawHall = resHall.objects.create(name='Shaw Hall', university=syracuseU)
     boothHall = resHall.objects.create(name='Booth Hall', university=syracuseU)
     
+    # create Syracuse University dorm rooms
     shaw463 = dormRoom.objects.create(roomNumber='463', resHall=shawHall)
     shaw309 = dormRoom.objects.create(roomNumber='309', resHall=shawHall)
 
+    # create Cornell University dorms
     smithHall = resHall.objects.create(name='Smith Hall', university=cornellU)
     smith261 = dormRoom.objects.create(roomNumber='261', resHall=smithHall)
     
+    # create residence hall reviews
     shawReview1 = resHallReview.objects.create(
         reviewTitle = 'Pretty good dorm',
         reviewBody = 'Has a dining hall but too many engineers',
@@ -36,6 +44,7 @@ def createTestData(apps, schema_editor):
         resHall = boothHall
     )
 
+    # create residence hall photos
     shawPhoto1 = resHallPhoto.objects.create(
         photo = 'res-hall-photos/test_data_shaw.jpg',
         resHall = shawHall
@@ -49,6 +58,7 @@ def createTestData(apps, schema_editor):
         resHall = boothHall
     )
 
+    # create dorm room reviews
     shaw463Review1 = dormRoomReview.objects.create(
         reviewTitle = 'Big room',
         reviewBody = 'Long elevator ride though',
@@ -62,6 +72,7 @@ def createTestData(apps, schema_editor):
         dormRoom = shaw463
     )
     
+    # create dorm room photos
     shaw463Photo1 = dormRoomPhoto.objects.create(
         photo = 'dorm-room-photos/test_data_shaw463.jpg',
         dormRoom = shaw463

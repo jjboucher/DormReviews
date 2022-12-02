@@ -167,5 +167,7 @@ media/res-hall-photos/*
 media/dorm-room-photos/*
 
 # Media exceptions here:
-!media/res-hall-photos/shaw.jpg
-!media/res-hall-photos/booth.jpg
+!media/res-hall-photos/test_data_shaw.jpg
+!media/res-hall-photos/test_data_shaw2.jpg
+!media/res-hall-photos/test_data_booth.jpg
+!media/dorm-room-photos/test_data_shaw463.jpg
