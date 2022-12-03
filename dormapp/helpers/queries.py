@@ -2,11 +2,18 @@ import dormapp.models as m
 import uuid
 
 #region homePage
+
+## universityView
+## TODO
+
 class universityView():
     def __init__(self, id, name, reviewCount):
         self.id = id
         self.name = name
         self.reviewCount = reviewCount
+
+## getUniversities()
+## Retrieves list of all University objects from database
 
 def getUniversities():
     universities = m.University.objects.all()
@@ -21,18 +28,28 @@ def getUniversities():
         
     return universityList
 
+## addUniversity(string name)
+## Inserts a new University object into database
+
 def addUniversity(name):
     university = m.University(id = uuid.uuid4(), name = name)
     university.save()
 #endregion
 
 #region resHallsPage
+
+## resHallView
+## TODO
+
 class resHallView():
     def __init__(self, id, name, thumbnail, rating):
         self.id = id
         self.name = name
         self.thumbnail = thumbnail
         self.rating = rating
+
+## getResHalls(uuid universityId)
+## TODO
 
 def getResHalls(universityId):
     resHalls = m.ResHall.objects.filter(university = universityId)
@@ -53,9 +70,15 @@ def getResHalls(universityId):
     
     return returnList
 
+## getUniversityName(uuid universityId)
+## TODO
+
 def getUniversityName(universityId):
     university = m.University.objects.get(id=universityId)
     return university.name
+
+## addResHall(uuid universityId, string name)
+## TODO
 
 def addResHall(universityId, name):
     university = m.University.objects.get(id=universityId)
@@ -66,24 +89,39 @@ def addResHall(universityId, name):
 
 #region dormRoomsPage
 
+## getResHallName(uuid resHallId)
+## TODO
+
 def getResHallName(resHallId):
     resHall = m.ResHall.objects.get(id=resHallId)
     return resHall.name
+
+## addResHallReview(uuid hallId, int rating, string title, string body)
+## TODO
 
 def addResHallReview(hallId, rating, title, body):
     hall = m.ResHall.objects.get(id=hallId)
     review = m.ResHallReview(id = uuid.uuid4(), resHall = hall, starRating = rating, reviewTitle = title, reviewBody = body)
     review.save()
 
+## addResHallPhoto(uuid hallId, file uploadedPhoto)
+## TODO
+
 def addResHallPhoto(hallId, uploadedPhoto):
     hall = m.ResHall.objects.get(id=hallId)
     photo = m.ResHallPhoto(resHall = hall, photo = uploadedPhoto)
     photo.save()
 
+## addDormRoom(uuid hallId, int roomNumber)
+## TODO
+
 def addDormRoom(hallId, roomNumber):
     resHall = m.ResHall.objects.get(id=hallId)
     dormRoom = m.DormRoom(id = uuid.uuid4(), resHall = resHall, roomNumber = roomNumber)
     dormRoom.save()
+
+## dormRoomView
+## TODO
 
 class dormRoomView():
     def __init__(self, id, roomNumber, thumbnail, rating):
@@ -91,6 +129,9 @@ class dormRoomView():
         self.roomNumber = roomNumber
         self.thumbnail = thumbnail
         self.rating = rating
+
+## getDormRooms(uuid resHallId)
+## TODO
 
 def getDormRooms(resHallId):
     dormRooms = m.DormRoom.objects.filter(resHall = resHallId)
@@ -111,8 +152,14 @@ def getDormRooms(resHallId):
     
     return returnList
 
+## getResHallReviews(uuid resHallId)
+## TODO
+
 def getResHallReviews(resHallId):
     return m.ResHallReview.objects.filter(resHall = resHallId).order_by('-dateCreated')
+
+## getResHallPhotos(resHallId)
+## TODO
 
 def getResHallPhotos(resHallId):
     return m.ResHallPhoto.objects.filter(resHall = resHallId).order_by('dateCreated')
@@ -120,20 +167,36 @@ def getResHallPhotos(resHallId):
 #endregion
 
 #region dormRoomReviews
+
+## addDormRoomReview(uuid dormId, int rating, string title, string body)
+## TODO
+
 def addDormRoomReview(dormId, rating, title, body):
     dorm = m.DormRoom.objects.get(id=dormId)
     review = m.DormRoomReview(id = uuid.uuid4(), dormRoom = dorm, starRating = rating, reviewTitle = title, reviewBody = body)
     review.save()
 
+## getDormReviews(uuid dormRoomId)
+## TODO
+
 def getDormReviews(dormRoomId):
     return m.DormRoomReview.objects.filter(dormRoom = dormRoomId).order_by('-dateCreated')
+
+## getDormName(uuid dormRoomId)
+## TODO
 
 def getDormName(dormRoomId):
     dormRoom = m.DormRoom.objects.get(id = dormRoomId)
     return dormRoom.roomNumber
 
+## getDormPhotos(uuid dormRoomId)
+## TODO
+
 def getDormPhotos(dormRoomId):
     return m.DormRoomPhoto.objects.filter(dormRoom = dormRoomId).order_by('dateCreated')
+
+## addDormRoomPhoto(uuid dormId, file uploadedPhoto)
+## TODO
 
 def addDormRoomPhoto(dormId, uploadedPhoto):
     dormRoom = m.DormRoom.objects.get(id=dormId)

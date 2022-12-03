@@ -2,13 +2,25 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from dormapp.helpers import queries
 
-# Create your views here.
+# All views in the webapp.
+
+## index(HttpRequest request)
+## This view represents the homepage. It will contain a list of
+## all universities contained within the database for user selection,
+## as well as the function to add a new unrepresented university.
+## Associated with homePage.html.
+## url: ''
 
 def index(request):
     context = {
         'universitiesList': queries.getUniversities()
     }
     return render(request, "homePage.html", context)
+
+## addUniversityPage(HttpRequest request)
+## This view represents the resulting page when a user uploads
+## a new university using the form from homePage.html.
+## url: '/addUniversityPage
 
 def addUniversityPage(request):
     if request.method == 'POST':
@@ -17,6 +29,12 @@ def addUniversityPage(request):
         queries.addUniversity(name)
 
         return index(request)
+
+## resHallsPage(HttpRequest request, uuid universityId)
+## View that retrieves a Residence Hall page according to the given
+## uuid universityId. 
+## Associated with resHalls.html
+## url: '<uuid:universityId>/resHalls'
 
 def resHallsPage(request, universityId):
 
@@ -27,6 +45,12 @@ def resHallsPage(request, universityId):
     }
     return render(request, 'resHalls.html', context)
 
+## addResHallPage(HttpRequest request, uuid universityId)
+## View that adds a new Residence Hall page according to the form on
+## resHalls.html. The new resHall object is created according to the 
+## form data and the uuid universityId passed in by the page.
+## url: '<uuid:universityId>/addResHall'
+
 def addResHallPage(request, universityId):
     if request.method == 'POST':
         name = request.POST['name']
@@ -34,6 +58,14 @@ def addResHallPage(request, universityId):
         queries.addResHall(universityId, name)
 
         return resHallsPage(request, universityId)
+
+## dormRoomsPage(HttpRequest request, uuid resHallId)
+## View that retrieves a Dorm Room page according to the given uuid
+## resHallId. 
+## To clarify: This page will show all of the dorm rooms within the 
+## given res hall.
+## Associated with dormRooms.html
+## url: '<uuid:resHallId>/dormRooms'
 
 def dormRoomsPage(request, resHallId):
     resHallPhotos = queries.getResHallPhotos(resHallId)
@@ -49,6 +81,11 @@ def dormRoomsPage(request, resHallId):
     }
     return render(request, 'dormRooms.html', context)
 
+## addDormRoomPage(HttpRequest request, uuid resHallId)
+## View that inserts a new dormRoom object into the database according
+## to the filled-out form from dormRooms.html.
+## url: '<uuid:resHallId>/addDormRoom'
+
 def addDormRoomPage(request, resHallId):
     if request.method == 'POST':
         roomNumber = request.POST['roomNumber']
@@ -56,6 +93,13 @@ def addDormRoomPage(request, resHallId):
         queries.addDormRoom(resHallId, roomNumber)
 
         return dormRoomsPage(request, resHallId)
+
+## dormReviewsPage(HttpRequest request, uuid dormId)
+## View that retrieves a page according to the given uuid dormId which
+## will display all of the photos and reviews associated with that dorm
+## room. 
+## Associated with dormReviews.html
+## url: '<uuid:dormId>/reviews'
 
 def dormReviewsPage(request, dormId):
     dormPhotos = queries.getDormPhotos(dormId)
@@ -69,6 +113,11 @@ def dormReviewsPage(request, dormId):
     }
     return render(request, 'dormReviews.html', context)
 
+## addReview(HttpRequest request, uuid resHallId)
+## View that inserts a new ResHallReview object into the database according
+## to the formdata from the reviewForm form within dormRooms.html.
+## url: '<uuid:resHallId>/addReview'
+
 def addReview(request, resHallId):
     if request.method == 'POST':
         reviewTitle = request.POST['reviewTitle']
@@ -78,6 +127,11 @@ def addReview(request, resHallId):
         queries.addResHallReview(resHallId,rating,reviewTitle,body)
 
         return dormRoomsPage(request,resHallId)
+
+## addDormReviewPage(HttpRequest request, uuid dormId)
+## View that inserts a new DormRoomReview object into the database according
+## to the formdata from the reviewForm dormReviews.html.
+## url: '<uuid:dormId>/addDormReview'
 
 def addDormReviewPage(request,dormId):
     if request.method == 'POST':
@@ -90,6 +144,10 @@ def addDormReviewPage(request,dormId):
 
         return dormReviewsPage(request,dormId)
 
+## addResHallPhoto(HttpRequest request, uuid resHallId)
+## View that inserts a new ResHallPhoto object into the database according
+## to the formdata from the photoForm within dormRooms.html.
+## url: '<uuid:resHallId>/addResHallPhoto'
 
 def addResHallPhoto(request, resHallId):
     if request.method == 'POST':
@@ -99,6 +157,11 @@ def addResHallPhoto(request, resHallId):
         queries.addResHallPhoto(resHallId, photo)
 
         return dormRoomsPage(request,resHallId)
+
+## addDormRoomPhoto(HttpRequest request, uuid dormRoomId)
+## View that inserts a new DormRoomPhoto object into the database according
+## to the formdata from the photoForm within dormReviews.html.
+## url: '<uuid:dormRoomId>/addDormRoomPhoto'
 
 def addDormRoomPhoto(request, dormRoomId):
     if request.method == 'POST':
