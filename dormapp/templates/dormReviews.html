@@ -75,6 +75,7 @@
 					<input id="rating-system-{{review.id}}" value="{{review.starRating}}" type="number" class="rating-loading starRating" min="0" max="5">
 					<p class="card-text">{{review.reviewBody}}</p>
 				</div>
+				
 			</div>
 		{% endfor %}
 	</div>
@@ -93,15 +94,15 @@
 				<div class="modal-body">
 					<div class="form-group">
 						<label for="reviewTitle">Review title:</label><br>
-						<input class="form-control" type="text" id="reviewTitle" name="reviewTitle" autofocus><br>
+						<input class="form-control" type="text" id="reviewTitle" name="reviewTitle" required><br>
 					</div>
 					<div class="form-group">
 						<label for="rating">Rating:</label><br>
-						<input class="form-control" type="number" id="rating" name="rating" class="rating-loading" min="0" max="5"><br>
+						<input class="form-control" type="number" id="rating" name="rating"class="rating-loading" min="0" max="5" required><br>
 					</div>
 					<div class="form-group">
 						<label for="comments">Review body:</label>
-						<textarea class="form-control" id="comments" name="comments" rows="4"></textarea>
+						<textarea class="form-control" id="comments" name="comments" rows="4" required></textarea>
 					</div>
 					<input type="text" class="" value="{{dormId}}" id="dormId" name="dormId" hidden disabled>
 
