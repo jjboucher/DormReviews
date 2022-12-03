@@ -118,15 +118,15 @@
 				<div class="modal-body">
 					<div class="form-group">
 						<label for="reviewTitle">Review title:</label><br>
-						<input class="form-control" type="text" id="reviewTitle" name="reviewTitle" autofocus><br>
+						<input class="form-control" type="text" id="reviewTitle" name="reviewTitle" autofocus required><br>
 					</div>
 					<div class="form-group">
 						<label for="rating">Rating:</label><br>
-						<input class="form-control" type="number" id="rating" name="rating" class="rating-loading" min="0" max="5"><br>
+						<input class="form-control" type="number" id="rating" name="rating" class="rating-loading" min="0" max="5" required><br>
 					</div>
 					<div class="form-group">
 						<label for="comments">Review body:</label>
-						<textarea class="form-control" id="comments" name="comments" rows="4"></textarea>
+						<textarea class="form-control" id="comments" name="comments" rows="4" required></textarea>
 					</div>
 					<input type="text" class="" value="{{resHallId}}" id="resHallId" name="resHallId" hidden disabled>
 
@@ -179,7 +179,7 @@
 				<div class="modal-body">
 					<div class="form-group">
 						<label for="roomNumber">Room number:</label><br>
-						<input class="form-control" type="text" id="roomNumber" name="roomNumber" autofocus><br>
+						<input class="form-control" type="text" id="roomNumber" name="roomNumber" autofocus required><br>
 					</div>
 					<input type="text" class="" value="{{resHallId}}" id="resHallId" name="resHallId" hidden disabled>
 				</div>
