@@ -290,6 +290,8 @@ class QueriesUnitTests(TestCase):
 
 # Component Tests.
 class ComponentTesting(TestCase):
+
+    ## set up initial database values
     def setUp(self):
         testu = m.University.objects.create(name="testu")
         testhall = m.ResHall.objects.create(name="testhall", university = testu)

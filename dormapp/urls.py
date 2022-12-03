@@ -2,6 +2,9 @@ from django.urls import path
 
 from . import views
 
+# All of the unique urls and pages in the webapp, and their corresponding
+# function within views.py
+
 urlpatterns = [
     path('', views.index, name='index'),
     path('addUniversity', views.addUniversityPage, name='addUniversityPage'),
