@@ -14,6 +14,7 @@ class universityView():
 
 ## getUniversities()
 ## Retrieves list of all University objects from database
+## returntype: [University]
 
 def getUniversities():
     universities = m.University.objects.all()
@@ -30,6 +31,7 @@ def getUniversities():
 
 ## addUniversity(string name)
 ## Inserts a new University object into database
+## returntype: void
 
 def addUniversity(name):
     university = m.University(id = uuid.uuid4(), name = name)
@@ -49,7 +51,9 @@ class resHallView():
         self.rating = rating
 
 ## getResHalls(uuid universityId)
-## TODO
+## Retrieves a list of ResHall objects according to the given
+## uuid universityId.
+## returntype: [ResHall]
 
 def getResHalls(universityId):
     resHalls = m.ResHall.objects.filter(university = universityId)
@@ -71,14 +75,18 @@ def getResHalls(universityId):
     return returnList
 
 ## getUniversityName(uuid universityId)
-## TODO
+## Retrieves the name of a University object in the database
+## according to its uuid universityId.
+## returntype: string
 
 def getUniversityName(universityId):
     university = m.University.objects.get(id=universityId)
     return university.name
 
 ## addResHall(uuid universityId, string name)
-## TODO
+## Inserts a ResHall object into the database according to passed in
+## data.
+## returntype: void
 
 def addResHall(universityId, name):
     university = m.University.objects.get(id=universityId)
@@ -97,7 +105,9 @@ def getResHallName(resHallId):
     return resHall.name
 
 ## addResHallReview(uuid hallId, int rating, string title, string body)
-## TODO
+## Inserts a new ResHallReview object into the database according to the
+## given data.
+## returntype: void
 
 def addResHallReview(hallId, rating, title, body):
     hall = m.ResHall.objects.get(id=hallId)
@@ -105,7 +115,9 @@ def addResHallReview(hallId, rating, title, body):
     review.save()
 
 ## addResHallPhoto(uuid hallId, file uploadedPhoto)
-## TODO
+## Inserts a new ResHallPhoto object into the database according to the
+## given data.
+## returntype: void
 
 def addResHallPhoto(hallId, uploadedPhoto):
     hall = m.ResHall.objects.get(id=hallId)
@@ -113,7 +125,9 @@ def addResHallPhoto(hallId, uploadedPhoto):
     photo.save()
 
 ## addDormRoom(uuid hallId, int roomNumber)
-## TODO
+## Inserts a new DormRoom object into the database according to the
+## given data.
+## returntype: void
 
 def addDormRoom(hallId, roomNumber):
     resHall = m.ResHall.objects.get(id=hallId)
@@ -131,7 +145,9 @@ class dormRoomView():
         self.rating = rating
 
 ## getDormRooms(uuid resHallId)
-## TODO
+## Retrieves a list of all DormRoom objects in the database which are
+## associated with the given resHallId.
+## returntype: [DormRoom]
 
 def getDormRooms(resHallId):
     dormRooms = m.DormRoom.objects.filter(resHall = resHallId)
@@ -153,13 +169,17 @@ def getDormRooms(resHallId):
     return returnList
 
 ## getResHallReviews(uuid resHallId)
-## TODO
+## Retrieves a list of all ResHallReview objects in the database which are
+## associated with the given resHallId.
+## returntype: [ResHallReview]
 
 def getResHallReviews(resHallId):
     return m.ResHallReview.objects.filter(resHall = resHallId).order_by('-dateCreated')
 
 ## getResHallPhotos(resHallId)
-## TODO
+## Retrieves a list of all ResHallPhoto objects in the database which are
+## associated with the given resHallId.
+## returntype: [ResHallPhoto]
 
 def getResHallPhotos(resHallId):
     return m.ResHallPhoto.objects.filter(resHall = resHallId).order_by('dateCreated')
@@ -169,7 +189,9 @@ def getResHallPhotos(resHallId):
 #region dormRoomReviews
 
 ## addDormRoomReview(uuid dormId, int rating, string title, string body)
-## TODO
+## Inserts a new DormRoomReview object into the database according to the
+## given data.
+## returntype: void
 
 def addDormRoomReview(dormId, rating, title, body):
     dorm = m.DormRoom.objects.get(id=dormId)
@@ -177,26 +199,34 @@ def addDormRoomReview(dormId, rating, title, body):
     review.save()
 
 ## getDormReviews(uuid dormRoomId)
-## TODO
+## Retrieves a list of all DormRoomReview objects in the database which are
+## associated with the given dormRoomId.
+## returntype: [DormRoomReview]
 
 def getDormReviews(dormRoomId):
     return m.DormRoomReview.objects.filter(dormRoom = dormRoomId).order_by('-dateCreated')
 
 ## getDormName(uuid dormRoomId)
-## TODO
+## Retrieves the name attribute of a given DormRoom object, through
+## its uuid dormRoomId.
+## returntype: string
 
 def getDormName(dormRoomId):
     dormRoom = m.DormRoom.objects.get(id = dormRoomId)
     return dormRoom.roomNumber
 
 ## getDormPhotos(uuid dormRoomId)
-## TODO
+## Retrieves a list of all DormRoomPhoto objects in the database which are
+## associated with the given dormRoomId.
+## returntype: [DormRoomPhoto]
 
 def getDormPhotos(dormRoomId):
     return m.DormRoomPhoto.objects.filter(dormRoom = dormRoomId).order_by('dateCreated')
 
 ## addDormRoomPhoto(uuid dormId, file uploadedPhoto)
-## TODO
+## Inserts a new DormRoomPhoto object into the database according to the
+## given data.
+## returntype: void
 
 def addDormRoomPhoto(dormId, uploadedPhoto):
     dormRoom = m.DormRoom.objects.get(id=dormId)
