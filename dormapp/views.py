@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from dormapp.helpers import queries
+from django.shortcuts import redirect
+
 
 # Create your views here.
 
@@ -15,8 +17,8 @@ def addUniversityPage(request):
         name = request.POST['name']
 
         queries.addUniversity(name)
-
-        return index(request)
+        return redirect('/dormapp/')
+        #return index(request)
 
 def resHallsPage(request, universityId):
 
@@ -32,8 +34,8 @@ def addResHallPage(request, universityId):
         name = request.POST['name']
 
         queries.addResHall(universityId, name)
-
-        return resHallsPage(request, universityId)
+        
+        return redirect(f'/dormapp/{universityId}/resHalls')
 
 def dormRoomsPage(request, resHallId):
     resHallPhotos = queries.getResHallPhotos(resHallId)
@@ -55,7 +57,7 @@ def addDormRoomPage(request, resHallId):
 
         queries.addDormRoom(resHallId, roomNumber)
 
-        return dormRoomsPage(request, resHallId)
+        return redirect(f'/dormapp/{resHallId}/dormRooms')
 
 def dormReviewsPage(request, dormId):
     dormPhotos = queries.getDormPhotos(dormId)
@@ -77,7 +79,7 @@ def addReview(request, resHallId):
 
         queries.addResHallReview(resHallId,rating,reviewTitle,body)
 
-        return dormRoomsPage(request,resHallId)
+        return redirect(f'/dormapp/{resHallId}/dormRooms')
 
 def addDormReviewPage(request,dormId):
     if request.method == 'POST':
@@ -88,8 +90,7 @@ def addDormReviewPage(request,dormId):
 
         queries.addDormRoomReview(dormId,rating,reviewTitle,body)
 
-        return dormReviewsPage(request,dormId)
-
+        return redirect(f'/dormapp/{dormId}/reviews')
 
 def addResHallPhoto(request, resHallId):
     if request.method == 'POST':
@@ -98,7 +99,7 @@ def addResHallPhoto(request, resHallId):
         assert(photo)
         queries.addResHallPhoto(resHallId, photo)
 
-        return dormRoomsPage(request,resHallId)
+        return redirect(f'/dormapp/{resHallId}/dormRooms')
 
 def addDormRoomPhoto(request, dormRoomId):
     if request.method == 'POST':
@@ -106,4 +107,4 @@ def addDormRoomPhoto(request, dormRoomId):
         assert(photo)
         queries.addDormRoomPhoto(dormRoomId, photo)
 
-        return dormReviewsPage(request, dormRoomId)
+        return redirect(f'/dormapp/{dormRoomId}/reviews')
