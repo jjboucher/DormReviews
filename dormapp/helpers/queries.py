@@ -34,7 +34,7 @@ def getUniversities():
 
 ## addUniversity(string name)
 ## Inserts a new University object into database
-def addUniversity(name):
+def addUniversity(name) -> m.University:
     if name:
         university = m.University(id = uuid.uuid4(), name = name)
         university.save()
@@ -47,7 +47,7 @@ def addUniversity(name):
 #     universityPhoto = m.UniversityPhoto(university = m.University.objects.get(id = universityId), photo = photo)
 #     universityPhoto.save()
 
-def addUniversityPhoto(university, uploadedPhoto):
+def addUniversityPhoto(university, uploadedPhoto) -> bool:
     if university and uploadedPhoto:
         photo = m.UniversityPhoto(university = university, photo = uploadedPhoto)
         photo.save()
