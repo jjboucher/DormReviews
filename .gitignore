@@ -163,11 +163,15 @@ cython_debug/
 media/*
 !media/res-hall-photos
 !media/dorm-room-photos
+!media/university-photos
 media/res-hall-photos/*
 media/dorm-room-photos/*
+media/university-photos/*
 
 # Media exceptions here:
 !media/res-hall-photos/test_data_shaw.jpg
 !media/res-hall-photos/test_data_shaw2.jpg
 !media/res-hall-photos/test_data_booth.jpg
 !media/dorm-room-photos/test_data_shaw463.jpg
+!media/university-photos/test_data_syracuse_logo.png
+!media/university-photos/test_data_cornell_logo.png
