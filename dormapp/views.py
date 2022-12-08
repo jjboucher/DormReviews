@@ -31,7 +31,7 @@ def homePage(request):
 def addUniversityPage(request):
     global message
     if request.method == 'POST':
-        name = request.POST['name']
+        name = request.POST.get('name', None)
         photo = request.FILES.get('myPhoto', False)
 
         newUniversity = queries.addUniversity(name)
