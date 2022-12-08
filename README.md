@@ -1,6 +1,6 @@
 # DormReviews
 
-Instructions for software testers:
+### Instructions for software testers:
 
 0. if you do not have Python installed, install it from https://www.python.org/downloads/
 1. clone this repository: `git clone https://github.com/jjboucher/DormReviews` (or download as zip from GitHub repo site)
@@ -14,3 +14,16 @@ Instructions for software testers:
 6. Then run:<br />`python manage.py runserver`
   
 Once the server is running, try out the app in your browser at https://localhost:8000/dormapp/.
+
+### Project structure
+* <ins>Models</ins> are defined in `/dormapp/models.py`
+* <ins>Templates</ins>, written in HTML with embedded Django tags, are located in `/dormapp/templates/`
+  * All pages extend `base.html`, with contains the logo heading and stylesheet/script references
+* <ins>Views</ins> functions are located in `/dormapp/views.py`
+  * Most views call custom database queries, which are located in `/dormapp/helpers/queries.py`
+* Test casese are in `/dormapp/tests.py`
+* Database: `/db.sqlite3`
+* Static files are located in `/static/`
+* Media files are located in `/media/`
+* Project settings: `/DormReviews/settings.py`
+* Project URL configurations are defined in `DormReviews/urls.py` and app URLs are defined in `/dormapp/urls.py`
