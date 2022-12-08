@@ -53,6 +53,7 @@ def resHallsPage(request, universityId):
         'resHallsList': queries.getResHalls(universityId),
         'universityName': queries.getUniversityName(universityId),
         'universityId': universityId,
+        'backUrl': '/dormapp/',
         'message': message
     }
     message = ''
@@ -83,7 +84,7 @@ def addResHallPage(request, universityId):
 def dormRoomsPage(request, resHallId):
     global message
     resHallPhotos = queries.getResHallPhotos(resHallId)
-
+    universityId = m.ResHall.objects.get(id=resHallId).university.id
     context = {
         'dormRoomList': queries.getDormRooms(resHallId),
         'resHallReviewList': queries.getResHallReviews(resHallId),
@@ -91,6 +92,7 @@ def dormRoomsPage(request, resHallId):
         'resHallPhotos': resHallPhotos,
         'photoCount': resHallPhotos.count(),
         'resHallId': resHallId,
+        'backUrl': f'/dormapp/{universityId}/resHalls',
         'message': message
     }
     message = ''
@@ -118,13 +120,14 @@ def addDormRoomPage(request, resHallId):
 def dormReviewsPage(request, dormId):
     global message
     dormPhotos = queries.getDormPhotos(dormId)
-
+    resHallId = m.DormRoom.objects.get(id=dormId).resHall.id
     context = {
         'dormReviewList': queries.getDormReviews(dormId),
         'dormName': queries.getDormName(dormId),
         'dormPhotos': dormPhotos,
         'photoCount': dormPhotos.count(),
         'dormId': dormId,
+        'backUrl': f'/dormapp/{resHallId}/dormRooms',
         'message': message
     }
     message = ''

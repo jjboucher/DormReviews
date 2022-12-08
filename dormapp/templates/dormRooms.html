@@ -26,7 +26,10 @@
 	<div class="col">
 		<!-- Res Hall Name, buttons -->
 		<div class="paddingClass">
-			<h1>{{resHallName}}</h1>
+			<div class="button-and-header">
+				<a href="{{backUrl}}" class="custom-nav previous round">&#8249;</a>
+				<h1 class="next-to-button">&nbsp;{{resHallName}}</h1>
+			</div>
 			<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
 				Write Review
 			</button>
@@ -46,6 +49,7 @@
 					{% if dormRoom.thumbnail %}
 					<img src="/media/{{dormRoom.thumbnail}}" alt="{{dormRoom.roomNumber}}"
 						style="width:300px;height:200px"/>
+					<br><br>
 					{% endif %}
 					<h5 class="card-title">{{dormRoom.roomNumber}}</h5>
 					<p class="card-text">Average rating: {{dormRoom.rating}}</p>
@@ -158,7 +162,7 @@
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
-					<input type="file" id="myPhoto" name="myPhoto" accept="image/png, image/jpeg, image/gif" required>
+					<input type="file" id="myPhoto" name="myPhoto" accept="image/*" required>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

@@ -3,8 +3,10 @@
 {% load static %}
 
 <div class="paddingClass">
-	<h2>Residence Halls at {{universityName}}</h2>
-
+	<div class="button-and-header">
+		<a href="{{backUrl}}" class="custom-nav previous round">&#8249;</a>
+		<h2 class="next-to-button">&nbsp;Residence Halls at {{universityName}}</h2>
+	</div>
 	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addResHallPopup">
 		Add Residence Hall
 	</button>
