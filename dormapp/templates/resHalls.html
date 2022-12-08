@@ -54,6 +54,12 @@
 	</div>
 </div>
 
+{% if message %}
+<script>
+	alert("{{message}}");
+</script>
+{% endif %}
+
 <script>
 	$(document).ready(function(){
 		$('.starRating').each(function() {

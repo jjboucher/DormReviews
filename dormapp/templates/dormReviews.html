@@ -94,7 +94,7 @@
 				<div class="modal-body">
 					<div class="form-group">
 						<label for="reviewTitle">Review title:</label><br>
-						<input class="form-control" type="text" id="reviewTitle" name="reviewTitle" required><br>
+						<input class="form-control" type="text" id="reviewTitle" name="reviewTitle"><br>
 					</div>
 					<div class="form-group">
 						<label for="rating">Rating:</label><br>
@@ -102,7 +102,7 @@
 					</div>
 					<div class="form-group">
 						<label for="comments">Review body:</label>
-						<textarea class="form-control" id="comments" name="comments" rows="4" required></textarea>
+						<textarea class="form-control" id="comments" name="comments" rows="4"></textarea>
 					</div>
 					<input type="text" class="" value="{{dormId}}" id="dormId" name="dormId" hidden disabled>
 
@@ -129,7 +129,7 @@
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
-					<input type="file" id="myPhoto" name="myPhoto" accept="image/png, image/jpeg, image/gif">
+					<input type="file" id="myPhoto" name="myPhoto" accept="image/png, image/jpeg, image/gif" required>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -141,6 +141,11 @@
 	</div>
 </div>
 
+{% if message %}
+<script>
+	alert("{{message}}");
+</script>
+{% endif %}
 
 <script>
 	$(document).ready(function(){

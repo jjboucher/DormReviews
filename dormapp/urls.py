@@ -1,12 +1,15 @@
 from django.urls import path
+from django.conf.urls import include
+from django.conf import settings
 
+app_name = 'dormapp'
 from . import views
 
 # All of the unique urls and pages in the webapp, and their corresponding
 # function within views.py
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('', views.homePage, name='homePage'),
     path('addUniversity', views.addUniversityPage, name='addUniversityPage'),
     path('<uuid:universityId>/resHalls', views.resHallsPage, name='resHallsPage'),
     path('<uuid:universityId>/addResHall', views.addResHallPage, name='addResHall'),

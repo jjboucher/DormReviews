@@ -1,11 +1,14 @@
 import dormapp.models as m
 import uuid
 
+# for form validation:
+shortMaxLength = 255
+longMaxLength = 1500
+
 #region homePage
 
 ## universityView
 ## TODO
-
 class universityView():
     def __init__(self, id, name, reviewCount):
         self.id = id
@@ -14,7 +17,6 @@ class universityView():
 
 ## getUniversities()
 ## Retrieves list of all University objects from database
-
 def getUniversities():
     universities = m.University.objects.all()
     universityList = []
@@ -30,17 +32,18 @@ def getUniversities():
 
 ## addUniversity(string name)
 ## Inserts a new University object into database
-
-def addUniversity(name):
-    university = m.University(id = uuid.uuid4(), name = name)
-    university.save()
+def addUniversity(name) -> bool:
+    if name and len(name) <= shortMaxLength:
+        university = m.University(id = uuid.uuid4(), name = name)
+        university.save()
+        return True
+    return False
 #endregion
 
 #region resHallsPage
 
 ## resHallView
 ## TODO
-
 class resHallView():
     def __init__(self, id, name, thumbnail, rating):
         self.id = id
@@ -50,7 +53,6 @@ class resHallView():
 
 ## getResHalls(uuid universityId)
 ## TODO
-
 def getResHalls(universityId):
     resHalls = m.ResHall.objects.filter(university = universityId)
     returnList = []
@@ -64,7 +66,7 @@ def getResHalls(universityId):
         thumbnail = None
         photos = m.ResHallPhoto.objects.filter(resHall = resHall)
         if len(photos) > 0:
-            thumbnail = photos.earliest('dateCreated').photo
+            thumbnail = photos.latest('dateCreated').photo
 
         returnList.append(resHallView(resHall.id, resHall.name, thumbnail, averageRating))
     
@@ -72,18 +74,19 @@ def getResHalls(universityId):
 
 ## getUniversityName(uuid universityId)
 ## TODO
-
 def getUniversityName(universityId):
     university = m.University.objects.get(id=universityId)
     return university.name
 
 ## addResHall(uuid universityId, string name)
 ## TODO
-
 def addResHall(universityId, name):
-    university = m.University.objects.get(id=universityId)
-    resHall = m.ResHall(id = uuid.uuid4(), university = university, name = name)
-    resHall.save()
+    if name and len(name) <= shortMaxLength:
+        university = m.University.objects.get(id=universityId)
+        resHall = m.ResHall(id = uuid.uuid4(), university = university, name = name)
+        resHall.save()
+        return True
+    return False
 
 #endregion
 
@@ -91,38 +94,45 @@ def addResHall(universityId, name):
 
 ## getResHallName(uuid resHallId)
 ## TODO
-
 def getResHallName(resHallId):
     resHall = m.ResHall.objects.get(id=resHallId)
     return resHall.name
 
 ## addResHallReview(uuid hallId, int rating, string title, string body)
 ## TODO
-
 def addResHallReview(hallId, rating, title, body):
-    hall = m.ResHall.objects.get(id=hallId)
-    review = m.ResHallReview(id = uuid.uuid4(), resHall = hall, starRating = rating, reviewTitle = title, reviewBody = body)
-    review.save()
+    if (len(title) <= shortMaxLength and
+        rating and rating >= 1 and rating <= 5 and
+        len(body) <= longMaxLength):
+
+            hall = m.ResHall.objects.get(id=hallId)
+            review = m.ResHallReview(id = uuid.uuid4(), resHall = hall, starRating = rating, reviewTitle = title, reviewBody = body)
+            review.save()
+            return True
+    return False
 
 ## addResHallPhoto(uuid hallId, file uploadedPhoto)
 ## TODO
-
 def addResHallPhoto(hallId, uploadedPhoto):
-    hall = m.ResHall.objects.get(id=hallId)
-    photo = m.ResHallPhoto(resHall = hall, photo = uploadedPhoto)
-    photo.save()
+    if uploadedPhoto:
+        hall = m.ResHall.objects.get(id=hallId)
+        photo = m.ResHallPhoto(resHall = hall, photo = uploadedPhoto)
+        photo.save()
+        return True
+    return False
 
 ## addDormRoom(uuid hallId, int roomNumber)
 ## TODO
-
 def addDormRoom(hallId, roomNumber):
-    resHall = m.ResHall.objects.get(id=hallId)
-    dormRoom = m.DormRoom(id = uuid.uuid4(), resHall = resHall, roomNumber = roomNumber)
-    dormRoom.save()
+    if roomNumber and len(roomNumber) <= shortMaxLength:
+        resHall = m.ResHall.objects.get(id=hallId)
+        dormRoom = m.DormRoom(id = uuid.uuid4(), resHall = resHall, roomNumber = roomNumber)
+        dormRoom.save()
+        return True
+    return False
 
 ## dormRoomView
 ## TODO
-
 class dormRoomView():
     def __init__(self, id, roomNumber, thumbnail, rating):
         self.id = id
@@ -132,7 +142,6 @@ class dormRoomView():
 
 ## getDormRooms(uuid resHallId)
 ## TODO
-
 def getDormRooms(resHallId):
     dormRooms = m.DormRoom.objects.filter(resHall = resHallId)
     returnList = []
@@ -146,7 +155,7 @@ def getDormRooms(resHallId):
         thumbnail = None
         photos = m.DormRoomPhoto.objects.filter(dormRoom = dormRoom.id)
         if len(photos) > 0:
-            thumbnail = photos.earliest('dateCreated').photo
+            thumbnail = photos.latest('dateCreated').photo
 
         returnList.append(dormRoomView(dormRoom.id, dormRoom.roomNumber, thumbnail, averageRating))
     
@@ -154,15 +163,13 @@ def getDormRooms(resHallId):
 
 ## getResHallReviews(uuid resHallId)
 ## TODO
-
 def getResHallReviews(resHallId):
     return m.ResHallReview.objects.filter(resHall = resHallId).order_by('-dateCreated')
 
 ## getResHallPhotos(resHallId)
 ## TODO
-
 def getResHallPhotos(resHallId):
-    return m.ResHallPhoto.objects.filter(resHall = resHallId).order_by('dateCreated')
+    return m.ResHallPhoto.objects.filter(resHall = resHallId).order_by('-dateCreated')
 
 #endregion
 
@@ -170,37 +177,40 @@ def getResHallPhotos(resHallId):
 
 ## addDormRoomReview(uuid dormId, int rating, string title, string body)
 ## TODO
-
 def addDormRoomReview(dormId, rating, title, body):
-    dorm = m.DormRoom.objects.get(id=dormId)
-    review = m.DormRoomReview(id = uuid.uuid4(), dormRoom = dorm, starRating = rating, reviewTitle = title, reviewBody = body)
-    review.save()
+    if (len(title) <= shortMaxLength and
+        rating and rating >= 1 and rating <= 5 and
+        len(body) <= longMaxLength):
+            dorm = m.DormRoom.objects.get(id=dormId)
+            review = m.DormRoomReview(id = uuid.uuid4(), dormRoom = dorm, starRating = rating, reviewTitle = title, reviewBody = body)
+            review.save()
+            return True
+    return False
 
 ## getDormReviews(uuid dormRoomId)
 ## TODO
-
 def getDormReviews(dormRoomId):
     return m.DormRoomReview.objects.filter(dormRoom = dormRoomId).order_by('-dateCreated')
 
 ## getDormName(uuid dormRoomId)
 ## TODO
-
 def getDormName(dormRoomId):
     dormRoom = m.DormRoom.objects.get(id = dormRoomId)
     return dormRoom.roomNumber
 
 ## getDormPhotos(uuid dormRoomId)
 ## TODO
-
 def getDormPhotos(dormRoomId):
-    return m.DormRoomPhoto.objects.filter(dormRoom = dormRoomId).order_by('dateCreated')
+    return m.DormRoomPhoto.objects.filter(dormRoom = dormRoomId).order_by('-dateCreated')
 
 ## addDormRoomPhoto(uuid dormId, file uploadedPhoto)
 ## TODO
-
 def addDormRoomPhoto(dormId, uploadedPhoto):
-    dormRoom = m.DormRoom.objects.get(id=dormId)
-    photo = m.DormRoomPhoto(dormRoom = dormRoom, photo = uploadedPhoto)
-    photo.save()
+    if uploadedPhoto:
+        dormRoom = m.DormRoom.objects.get(id=dormId)
+        photo = m.DormRoomPhoto(dormRoom = dormRoom, photo = uploadedPhoto)
+        photo.save()
+        return True
+    return False
 
 #endregion

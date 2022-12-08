@@ -16,7 +16,7 @@
 <ul class="list-group not-too-wide">
 {% for university in universitiesList %}
 	<li class="list-group-item d-flex justify-content-between align-items-center">
-		<a class="stretched-link link-dark big-names" href="/dormapp/{{university.id}}/resHalls">
+		<a class="stretched-link link-dark big-names" href="{% url 'dormapp:resHallsPage' university.id %}">
 			{{university.name}}
 		</a>
 		<span class="badge bg-secondary rounded-pill">{{university.reviewCount}} reviews</span>
@@ -55,6 +55,12 @@
 		</div>
 	</div>
 </div>
+
+{% if message %}
+<script>
+	alert("{{message}}");
+</script>
+{% endif %}
 
 <script>
 $(document).ready(function(){

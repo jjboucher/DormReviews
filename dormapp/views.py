@@ -1,21 +1,26 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 from dormapp.helpers import queries
 from django.shortcuts import redirect
+from django.urls import reverse
+from django.http import HttpResponseRedirect
 
+message = ''
 
 # All views in the webapp.
 
-## index(HttpRequest request)
+## homePage(HttpRequest request)
 ## This view represents the homepage. It will contain a list of
 ## all universities contained within the database for user selection,
 ## as well as the function to add a new unrepresented university.
 ## Associated with homePage.html.
 ## url: ''
-def index(request):
+def homePage(request):
+    global message
     context = {
-        'universitiesList': queries.getUniversities()
+        'universitiesList': queries.getUniversities(),
+        'message': message #kwargs.get('message', '')
     }
+    message = ''
     return render(request, "homePage.html", context)
 
 ## addUniversityPage(HttpRequest request)
@@ -23,11 +28,14 @@ def index(request):
 ## a new university using the form from homePage.html.
 ## url: '/addUniversityPage
 def addUniversityPage(request):
+    global message
     if request.method == 'POST':
         name = request.POST['name']
 
-        queries.addUniversity(name)
-        return redirect('/dormapp/')
+        success = queries.addUniversity(name)
+        message = '' if success else 'Invalid university name'
+
+        return redirect('dormapp:homePage')
         #return index(request)
 
 ## resHallsPage(HttpRequest request, uuid universityId)
@@ -36,12 +44,14 @@ def addUniversityPage(request):
 ## Associated with resHalls.html
 ## url: '<uuid:universityId>/resHalls'
 def resHallsPage(request, universityId):
-
+    global message
     context = {
         'resHallsList': queries.getResHalls(universityId),
         'universityName': queries.getUniversityName(universityId),
-        'universityId': universityId
+        'universityId': universityId,
+        'message': message
     }
+    message = ''
     return render(request, 'resHalls.html', context)
 
 ## addResHallPage(HttpRequest request, uuid universityId)
@@ -50,12 +60,14 @@ def resHallsPage(request, universityId):
 ## form data and the uuid universityId passed in by the page.
 ## url: '<uuid:universityId>/addResHall'
 def addResHallPage(request, universityId):
+    global message
     if request.method == 'POST':
         name = request.POST['name']
 
-        queries.addResHall(universityId, name)
-        
-        return redirect(f'/dormapp/{universityId}/resHalls')
+        success = queries.addResHall(universityId, name)
+        message = '' if success else 'Invalid residence hall name'
+
+        return redirect('dormapp:resHallsPage', universityId=universityId)
 
 ## dormRoomsPage(HttpRequest request, uuid resHallId)
 ## View that retrieves a Dorm Room page according to the given uuid
@@ -65,6 +77,7 @@ def addResHallPage(request, universityId):
 ## Associated with dormRooms.html
 ## url: '<uuid:resHallId>/dormRooms'
 def dormRoomsPage(request, resHallId):
+    global message
     resHallPhotos = queries.getResHallPhotos(resHallId)
 
     context = {
@@ -73,9 +86,10 @@ def dormRoomsPage(request, resHallId):
         'resHallName': queries.getResHallName(resHallId),
         'resHallPhotos': resHallPhotos,
         'photoCount': resHallPhotos.count(),
-        'resHallId': resHallId
-        
+        'resHallId': resHallId,
+        'message': message
     }
+    message = ''
     return render(request, 'dormRooms.html', context)
 
 ## addDormRoomPage(HttpRequest request, uuid resHallId)
@@ -83,12 +97,13 @@ def dormRoomsPage(request, resHallId):
 ## to the filled-out form from dormRooms.html.
 ## url: '<uuid:resHallId>/addDormRoom'
 def addDormRoomPage(request, resHallId):
+    global message
     if request.method == 'POST':
         roomNumber = request.POST['roomNumber']
 
-        queries.addDormRoom(resHallId, roomNumber)
-
-        return redirect(f'/dormapp/{resHallId}/dormRooms')
+        success = queries.addDormRoom(resHallId, roomNumber)
+        message = '' if success else 'Invalid dorm room number'
+        return redirect('dormapp:dormRoomsPage', resHallId=resHallId)
 
 ## dormReviewsPage(HttpRequest request, uuid dormId)
 ## View that retrieves a page according to the given uuid dormId which
@@ -97,6 +112,7 @@ def addDormRoomPage(request, resHallId):
 ## Associated with dormReviews.html
 ## url: '<uuid:dormId>/reviews'
 def dormReviewsPage(request, dormId):
+    global message
     dormPhotos = queries.getDormPhotos(dormId)
 
     context = {
@@ -104,8 +120,10 @@ def dormReviewsPage(request, dormId):
         'dormName': queries.getDormName(dormId),
         'dormPhotos': dormPhotos,
         'photoCount': dormPhotos.count(),
-        'dormId': dormId
+        'dormId': dormId,
+        'message': message
     }
+    message = ''
     return render(request, 'dormReviews.html', context)
 
 ## addReview(HttpRequest request, uuid resHallId)
@@ -113,51 +131,53 @@ def dormReviewsPage(request, dormId):
 ## to the formdata from the reviewForm form within dormRooms.html.
 ## url: '<uuid:resHallId>/addReview'
 def addReview(request, resHallId):
+    global message
     if request.method == 'POST':
         reviewTitle = request.POST['reviewTitle']
-        rating = request.POST['rating']
+        rating = (int)(request.POST['rating'])
         body = request.POST['comments']
 
-        queries.addResHallReview(resHallId,rating,reviewTitle,body)
-
-        return redirect(f'/dormapp/{resHallId}/dormRooms')
+        success = queries.addResHallReview(resHallId,rating,reviewTitle,body)
+        message = '' if success else 'Invalid review input'
+        return redirect('dormapp:dormRoomsPage', resHallId)
 
 ## addDormReviewPage(HttpRequest request, uuid dormId)
 ## View that inserts a new DormRoomReview object into the database according
 ## to the formdata from the reviewForm dormReviews.html.
 ## url: '<uuid:dormId>/addDormReview'
 def addDormReviewPage(request,dormId):
+    global message
     if request.method == 'POST':
         reviewTitle = request.POST.get('reviewTitle')
-        rating = request.POST.get('rating')
+        rating = (int)(request.POST.get('rating'))
         body = request.POST.get('comments')
         # dormId = request.POST.get('dormId')
 
-        queries.addDormRoomReview(dormId,rating,reviewTitle,body)
-
-        return redirect(f'/dormapp/{dormId}/reviews')
+        success = queries.addDormRoomReview(dormId,rating,reviewTitle,body)
+        message = '' if success else 'Invalid review input'
+        return redirect('dormapp:dormReviewsPage', dormId)
 
 ## addResHallPhoto(HttpRequest request, uuid resHallId)
 ## View that inserts a new ResHallPhoto object into the database according
 ## to the formdata from the photoForm within dormRooms.html.
 ## url: '<uuid:resHallId>/addResHallPhoto'
 def addResHallPhoto(request, resHallId):
+    global message
     if request.method == 'POST':
         
         photo = request.FILES.get('myPhoto', False)
-        assert(photo)
-        queries.addResHallPhoto(resHallId, photo)
-
-        return redirect(f'/dormapp/{resHallId}/dormRooms')
+        success = queries.addResHallPhoto(resHallId, photo)
+        message = '' if success else 'Invalid photo'
+        return redirect('dormapp:dormRoomsPage', resHallId)
 
 ## addDormRoomPhoto(HttpRequest request, uuid dormRoomId)
 ## View that inserts a new DormRoomPhoto object into the database according
 ## to the formdata from the photoForm within dormReviews.html.
 ## url: '<uuid:dormRoomId>/addDormRoomPhoto'
 def addDormRoomPhoto(request, dormRoomId):
+    global message
     if request.method == 'POST':
         photo = request.FILES.get('myPhoto', False)
-        assert(photo)
-        queries.addDormRoomPhoto(dormRoomId, photo)
-
-        return redirect(f'/dormapp/{dormRoomId}/reviews')
+        success = queries.addDormRoomPhoto(dormRoomId, photo)
+        message = '' if success else 'Invalid photo'
+        return redirect('dormapp:dormReviewsPage', dormId=dormRoomId)

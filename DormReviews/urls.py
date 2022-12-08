@@ -20,7 +20,7 @@ from django.conf.urls.static import static
 from dormapp import views
 
 urlpatterns = [
-    path('dormapp/', include('dormapp.urls')),
+    path('dormapp/', include('dormapp.urls', namespace='dormapp')),
     path('admin/', admin.site.urls),
     path('upload/', views.dormRoomsPage)
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
