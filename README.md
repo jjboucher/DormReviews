@@ -1,6 +1,6 @@
 # DormReviews
 
-### Instructions for software testers:
+### Instructions:
 
 0. if you do not have Python installed, install it from https://www.python.org/downloads/
 1. clone this repository: `git clone https://github.com/jjboucher/DormReviews` (or download as zip from GitHub repo site)
@@ -13,7 +13,7 @@
 
 6. Then run:<br />`python manage.py runserver`
   
-Once the server is running, try out the app in your browser at https://localhost:8000/dormapp/.
+Once the server is running, try out the app in your browser at http://localhost:8000/dormapp/.
 
 ### Project structure
 * <ins>Models</ins> are defined in `/dormapp/models.py`
