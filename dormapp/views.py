@@ -37,7 +37,7 @@ def addUniversityPage(request):
         newUniversity = queries.addUniversity(name)
         successPhoto = queries.addUniversityPhoto(newUniversity, photo)
         message = '' if newUniversity else 'Invalid university name'
-        message += '' if successPhoto else '\nInvalid photo'
+        
 
         return redirect('dormapp:homePage')
         #return index(request)

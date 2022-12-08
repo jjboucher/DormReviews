@@ -10,10 +10,11 @@ longMaxLength = 1500
 ## universityView
 ## TODO
 class universityView():
-    def __init__(self, id, name, reviewCount):
+    def __init__(self, id, name, reviewCount, logo):
         self.id = id
         self.name = name
         self.reviewCount = reviewCount
+        self.logo
 
 ## getUniversities()
 ## Retrieves list of all University objects from database
@@ -28,7 +29,7 @@ def getUniversities():
 
         logo = m.UniversityPhoto.objects.filter(university = university).first()
         
-        universityList.append(universityView(id=university.id, name=university.name, reviewCount=reviewCount))
+        universityList.append(universityView(id=university.id, name=university.name, reviewCount=reviewCount, logo=logo))
         
     return universityList
 
