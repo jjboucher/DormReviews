@@ -98,8 +98,10 @@ def getResHallName(resHallId):
 ## addResHallReview(uuid hallId, int rating, string title, string body)
 ## TODO
 def addResHallReview(hallId, rating, title, body):
+    rating = (int)(rating) if rating else 0
     if (len(title) <= shortMaxLength and
-        rating and rating >= 1 and rating <= 5 and
+        rating >= 1 and 
+        rating <= 5 and
         len(body) <= longMaxLength):
 
             hall = m.ResHall.objects.get(id=hallId)
@@ -175,8 +177,9 @@ def getResHallPhotos(resHallId):
 ## addDormRoomReview(uuid dormId, int rating, string title, string body)
 ## TODO
 def addDormRoomReview(dormId, rating, title, body):
+    rating = (int)(rating) if rating else 0
     if (len(title) <= shortMaxLength and
-        rating and rating >= 1 and rating <= 5 and
+        rating >= 1 and rating <= 5 and
         len(body) <= longMaxLength):
             dorm = m.DormRoom.objects.get(id=dormId)
             review = m.DormRoomReview(id = uuid.uuid4(), dormRoom = dorm, starRating = rating, reviewTitle = title, reviewBody = body)
