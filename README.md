@@ -1,5 +1,6 @@
 # DormReviews
 ![Screenshot](/static/screenshot.png)
+
 ### Contributors:
 * Joshua Boucher (team lead)
 * Season Chowdhury
