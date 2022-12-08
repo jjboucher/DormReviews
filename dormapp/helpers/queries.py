@@ -14,7 +14,7 @@ class universityView():
         self.id = id
         self.name = name
         self.reviewCount = reviewCount
-        self.logo
+        self.logo = logo
 
 ## getUniversities()
 ## Retrieves list of all University objects from database

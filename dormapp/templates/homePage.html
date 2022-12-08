@@ -10,6 +10,11 @@
 	a.big-names {
 		font-size: 18px;
 	}
+
+	.no-underline {
+		text-decoration: none;
+	}
+
 </style>
 
 
@@ -23,9 +28,9 @@
 <ul class="list-group not-too-wide">
 {% for university in universitiesList %}
 	<li class="list-group-item d-flex justify-content-between align-items-center">
-		<a class="stretched-link link-dark big-names" href="{% url 'dormapp:resHallsPage' university.id %}">
+		<a class="stretched-link link-dark no-underline big-names" href="{% url 'dormapp:resHallsPage' university.id %}">
 			{% if university.logo %}
-			<img src="/media/{{university.logo}}" alt="{{university.name}}"
+			<img src="/media/{{university.logo.photo}}" alt="{{university.name}}"
 				style="width:25px;height:25px"/>
 			{% endif %}
 			{{university.name}}
