@@ -25,20 +25,43 @@
 <div class="row">
 	<div class="col">
 		<!-- Res Hall Name, buttons -->
-		<h2>{{resHallName}}</h2>
-		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-			Write Review
-		</button>
-		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#photoPopup">
-			Upload Photo
-		</button>
-		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDormRoomPopup">
-			Add Dorm Room
-		</button>
+		<div class="paddingClass">
+			<h1>{{resHallName}}</h1>
+			<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+				Write Review
+			</button>
+			<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#photoPopup">
+				Upload Photo
+			</button>
+			<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDormRoomPopup">
+				Add Dorm Room
+			</button>
+		</div>
+		<!-- Dorm Rooms List-->
+		<div class="paddingClass">
+			<h3>Dorm Rooms:</h3>
+			{% for dormRoom in dormRoomList %}
+				<div class="card">
+					<div class="card-body">
+					{% if dormRoom.thumbnail %}
+					<img src="/media/{{dormRoom.thumbnail}}" alt="{{dormRoom.roomNumber}}"
+						style="width:300px;height:200px"/>
+					{% endif %}
+					<h5 class="card-title">{{dormRoom.roomNumber}}</h5>
+					<p class="card-text">Average rating: {{dormRoom.rating}}</p>
+					<input id="rating-system-{{dormRoom.id}}" value="{{dormRoom.rating}}" type="number" class="rating-loading starRating" min="0" max="5">
+					<a href="/dormapp/{{dormRoom.id}}/reviews" class="stretched-link"></a>
+					
+					</div>
+				</div>
+			{% endfor %}
+		</div>
 	</div>
 	<div class="col">
 		<!-- Photo Carousel -->
-		{% if photoCount %}
+		<div class="paddingClass">
+			<h3>Photos:</h3>
+			{% if photoCount %}
 			<div id="resHallCarousel" class="carousel slide" data-bs-ride="false">
 				<div class="carousel-indicators">
 				{% for photo in resHallPhotos %}
@@ -61,48 +84,29 @@
 					<span class="visually-hidden">Next</span>
 				</button>
 			</div>
-		{% else %}
-			<a class="link-primary" data-bs-toggle="modal" data-bs-target="#photoPopup" href="#">
-				Be the first to upload a photo of this residence hall!
-			</a>
-		{% endif %}
-	</div>
-</div>
-<div class="row">
-	<div class="col">
+			{% else %}
+				<a class="link-primary" data-bs-toggle="modal" data-bs-target="#photoPopup" href="#">
+					Be the first to upload a photo of this residence hall!
+				</a>
+			{% endif %}
+		</div>
 		<!-- Res Hall Reviews -->
-		<h3>Reviews:</h3>
-		{% for review in resHallReviewList %}
-			<div class="card">
-				<div class="card-body">
-					<h6 class="card-title">{{review.reviewTitle}}</h6>
-					<p class="card-text">{{review.dateCreated}}</p>
-					<input id="rating-system-{{review.id}}" value="{{review.starRating}}" type="number" class="rating-loading starRating" min="0" max="5">
-					<p class="card-text">{{review.reviewBody}}</p>
+		<div class="paddingClass">
+			<h3>Reviews:</h3>
+			{% for review in resHallReviewList %}
+				<div class="card">
+					<div class="card-body">
+						<h6 class="card-title">{{review.reviewTitle}}</h6>
+						<p class="card-text">{{review.dateCreated}}</p>
+						<input id="rating-system-{{review.id}}" value="{{review.starRating}}" type="number" class="rating-loading starRating" min="0" max="5">
+						<p class="card-text">{{review.reviewBody}}</p>
+					</div>
 				</div>
-			</div>
-		{% endfor %}
-	</div>
-	<div class="col">
-		<!-- Dorm Rooms List-->
-		<h3>Dorm Rooms:</h3>
-		{% for dormRoom in dormRoomList %}
-			<div class="card">
-				<div class="card-body">
-				{% if dormRoom.thumbnail %}
-				<img src="/media/{{dormRoom.thumbnail}}" alt="{{dormRoom.roomNumber}}"
-					style="width:300px;height:200px"/>
-				{% endif %}
-				<h5 class="card-title">{{dormRoom.roomNumber}}</h5>
-				<p class="card-text">Average rating: {{dormRoom.rating}}</p>
-				<input id="rating-system-{{dormRoom.id}}" value="{{dormRoom.rating}}" type="number" class="rating-loading starRating" min="0" max="5">
-				<a href="/dormapp/{{dormRoom.id}}/reviews" class="stretched-link"></a>
-				
-				</div>
-			</div>
-		{% endfor %}
+			{% endfor %}
+		</div>
 	</div>
 </div>
+
 
 <!-- Write Review Modal -->
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
