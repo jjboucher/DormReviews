@@ -134,7 +134,7 @@ def addReview(request, resHallId):
     global message
     if request.method == 'POST':
         reviewTitle = request.POST['reviewTitle']
-        rating = (int)(request.POST['rating'])
+        rating = request.POST['rating']
         body = request.POST['comments']
 
         success = queries.addResHallReview(resHallId,rating,reviewTitle,body)
@@ -149,7 +149,7 @@ def addDormReviewPage(request,dormId):
     global message
     if request.method == 'POST':
         reviewTitle = request.POST.get('reviewTitle')
-        rating = (int)(request.POST.get('rating'))
+        rating = request.POST.get('rating')
         body = request.POST.get('comments')
         # dormId = request.POST.get('dormId')
 
