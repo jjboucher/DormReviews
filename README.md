@@ -18,10 +18,10 @@
 7. Once the server is running, try out the app in your browser at http://localhost:8000/dormapp/.
 
 ### Project structure:
-* <ins>Models</ins> are defined in `/dormapp/models.py`
-* <ins>Templates</ins>, written in HTML with embedded Django tags, are located in `/dormapp/templates/`
+* **Models** are defined in `/dormapp/models.py`
+* **Templates**, written in HTML with embedded Django tags, are located in `/dormapp/templates/`
   * All pages extend `base.html`, with contains the logo heading and stylesheet/script references
-* <ins>Views</ins> functions are located in `/dormapp/views.py`
+* **Views** functions are located in `/dormapp/views.py`
   * Most views call custom database queries, which are located in `/dormapp/helpers/queries.py`
 * Test casese are in `/dormapp/tests.py`
 * Database: `/db.sqlite3`
