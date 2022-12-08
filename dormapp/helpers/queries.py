@@ -17,8 +17,6 @@ class universityView():
 
 ## getUniversities()
 ## Retrieves list of all University objects from database
-## returntype: [University]
-
 def getUniversities():
     universities = m.University.objects.all()
     universityList = []
@@ -34,8 +32,6 @@ def getUniversities():
 
 ## addUniversity(string name)
 ## Inserts a new University object into database
-## returntype: void
-
 def addUniversity(name):
     university = m.University(id = uuid.uuid4(), name = name)
     university.save()
@@ -53,10 +49,7 @@ class resHallView():
         self.rating = rating
 
 ## getResHalls(uuid universityId)
-## Retrieves a list of ResHall objects according to the given
-## uuid universityId.
-## returntype: [ResHall]
-
+## TODO
 def getResHalls(universityId):
     resHalls = m.ResHall.objects.filter(university = universityId)
     returnList = []
@@ -77,19 +70,13 @@ def getResHalls(universityId):
     return returnList
 
 ## getUniversityName(uuid universityId)
-## Retrieves the name of a University object in the database
-## according to its uuid universityId.
-## returntype: string
-
+## TODO
 def getUniversityName(universityId):
     university = m.University.objects.get(id=universityId)
     return university.name
 
 ## addResHall(uuid universityId, string name)
-## Inserts a ResHall object into the database according to passed in
-## data.
-## returntype: void
-
+## TODO
 def addResHall(universityId, name):
     if name and len(name) <= shortMaxLength:
         university = m.University.objects.get(id=universityId)
@@ -109,10 +96,7 @@ def getResHallName(resHallId):
     return resHall.name
 
 ## addResHallReview(uuid hallId, int rating, string title, string body)
-## Inserts a new ResHallReview object into the database according to the
-## given data.
-## returntype: void
-
+## TODO
 def addResHallReview(hallId, rating, title, body):
     if (len(title) <= shortMaxLength and
         rating and rating >= 1 and rating <= 5 and
@@ -125,10 +109,7 @@ def addResHallReview(hallId, rating, title, body):
     return False
 
 ## addResHallPhoto(uuid hallId, file uploadedPhoto)
-## Inserts a new ResHallPhoto object into the database according to the
-## given data.
-## returntype: void
-
+## TODO
 def addResHallPhoto(hallId, uploadedPhoto):
     if uploadedPhoto:
         hall = m.ResHall.objects.get(id=hallId)
@@ -138,10 +119,7 @@ def addResHallPhoto(hallId, uploadedPhoto):
     return False
 
 ## addDormRoom(uuid hallId, int roomNumber)
-## Inserts a new DormRoom object into the database according to the
-## given data.
-## returntype: void
-
+## TODO
 def addDormRoom(hallId, roomNumber):
     if roomNumber and len(roomNumber) <= shortMaxLength:
         resHall = m.ResHall.objects.get(id=hallId)
@@ -160,10 +138,7 @@ class dormRoomView():
         self.rating = rating
 
 ## getDormRooms(uuid resHallId)
-## Retrieves a list of all DormRoom objects in the database which are
-## associated with the given resHallId.
-## returntype: [DormRoom]
-
+## TODO
 def getDormRooms(resHallId):
     dormRooms = m.DormRoom.objects.filter(resHall = resHallId)
     returnList = []
@@ -184,18 +159,12 @@ def getDormRooms(resHallId):
     return returnList
 
 ## getResHallReviews(uuid resHallId)
-## Retrieves a list of all ResHallReview objects in the database which are
-## associated with the given resHallId.
-## returntype: [ResHallReview]
-
+## TODO
 def getResHallReviews(resHallId):
     return m.ResHallReview.objects.filter(resHall = resHallId).order_by('-dateCreated')
 
 ## getResHallPhotos(resHallId)
-## Retrieves a list of all ResHallPhoto objects in the database which are
-## associated with the given resHallId.
-## returntype: [ResHallPhoto]
-
+## TODO
 def getResHallPhotos(resHallId):
     return m.ResHallPhoto.objects.filter(resHall = resHallId).order_by('-dateCreated')
 
@@ -204,10 +173,7 @@ def getResHallPhotos(resHallId):
 #region dormRoomReviews
 
 ## addDormRoomReview(uuid dormId, int rating, string title, string body)
-## Inserts a new DormRoomReview object into the database according to the
-## given data.
-## returntype: void
-
+## TODO
 def addDormRoomReview(dormId, rating, title, body):
     if (len(title) <= shortMaxLength and
         rating and rating >= 1 and rating <= 5 and
@@ -220,26 +186,22 @@ def addDormRoomReview(dormId, rating, title, body):
 
 ## getDormReviews(uuid dormRoomId)
 ## TODO
-
 def getDormReviews(dormRoomId):
     return m.DormRoomReview.objects.filter(dormRoom = dormRoomId).order_by('-dateCreated')
 
 ## getDormName(uuid dormRoomId)
 ## TODO
-
 def getDormName(dormRoomId):
     dormRoom = m.DormRoom.objects.get(id = dormRoomId)
     return dormRoom.roomNumber
 
 ## getDormPhotos(uuid dormRoomId)
 ## TODO
-
 def getDormPhotos(dormRoomId):
     return m.DormRoomPhoto.objects.filter(dormRoom = dormRoomId).order_by('-dateCreated')
 
 ## addDormRoomPhoto(uuid dormId, file uploadedPhoto)
 ## TODO
-
 def addDormRoomPhoto(dormId, uploadedPhoto):
     if uploadedPhoto:
         dormRoom = m.DormRoom.objects.get(id=dormId)
