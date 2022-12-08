@@ -24,6 +24,10 @@
 {% for university in universitiesList %}
 	<li class="list-group-item d-flex justify-content-between align-items-center">
 		<a class="stretched-link link-dark big-names" href="{% url 'dormapp:resHallsPage' university.id %}">
+			{% if university.logo %}
+			<img src="/media/{{university.logo}}" alt="{{university.name}}"
+				style="width:25px;height:25px"/>
+			{% endif %}
 			{{university.name}}
 		</a>
 		<span class="badge bg-secondary rounded-pill">{{university.reviewCount}} reviews</span>
@@ -54,7 +58,9 @@
 						<label for="name">Name:</label><br>
 						<input class="form-control" type="text" id="name" name="name" autofocus required><br>
 					</div>
-					<!--<input type="text" class="" value="{{universityId}}" id="universityId" name="universityId" hidden disabled>-->
+					<div class="form-group">
+						<input type="file" id="myPhoto" name="myPhoto" accept="image/png, image/jpeg, image/gif" required>
+					</div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

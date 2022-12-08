@@ -25,6 +25,8 @@ def getUniversities():
         resHallReviewCount = m.ResHallReview.objects.filter(resHall__university = university).count()
 
         reviewCount = dormReviewCount + resHallReviewCount
+
+        logo = m.UniversityPhoto.objects.filter(university = university).first()
         
         universityList.append(universityView(id=university.id, name=university.name, reviewCount=reviewCount))
         
@@ -33,8 +35,25 @@ def getUniversities():
 ## addUniversity(string name)
 ## Inserts a new University object into database
 def addUniversity(name):
-    university = m.University(id = uuid.uuid4(), name = name)
-    university.save()
+    if name:
+        university = m.University(id = uuid.uuid4(), name = name)
+        university.save()
+        return university
+    return None
+
+## addUniversityPhoto(photo, uuid universityId)
+## Inserts a new UniversityPhoto object into database
+# def addUniversityPhoto(photo, universityId):
+#     universityPhoto = m.UniversityPhoto(university = m.University.objects.get(id = universityId), photo = photo)
+#     universityPhoto.save()
+
+def addUniversityPhoto(university, uploadedPhoto):
+    if university and uploadedPhoto:
+        photo = m.UniversityPhoto(university = university, photo = uploadedPhoto)
+        photo.save()
+        return True
+    return False
+
 #endregion
 
 #region resHallsPage

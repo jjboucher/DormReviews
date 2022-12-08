@@ -3,6 +3,7 @@ from dormapp.helpers import queries
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.http import HttpResponseRedirect
+import dormapp.models as m
 
 message = ''
 
@@ -31,9 +32,12 @@ def addUniversityPage(request):
     global message
     if request.method == 'POST':
         name = request.POST['name']
+        photo = request.FILES.get('myPhoto', False)
 
         success = queries.addUniversity(name)
+        successPhoto = queries.addUniversityPhoto(photo, m.University.objects.all().last().id)
         message = '' if success else 'Invalid university name'
+        message += '' if successPhoto else '\nInvalid photo'
 
         return redirect('dormapp:homePage')
         #return index(request)

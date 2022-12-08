@@ -35,6 +35,12 @@ class DormRoomReview(models.Model):
     reviewBody = models.TextField(max_length=longMaxLength)
     dateCreated = models.DateTimeField(auto_now=True)
 
+class UniversityPhoto(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    university = models.ForeignKey(University, on_delete=models.CASCADE)
+    photo = models.ImageField(upload_to='university-photos')
+    dateCreated = models.DateTimeField(auto_now=True)
+
 class ResHallPhoto(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     resHall = models.ForeignKey(ResHall, on_delete=models.CASCADE)
