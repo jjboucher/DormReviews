@@ -1,10 +1,6 @@
-body {
-    background-image: linear-gradient(to right, white, #D2B4DE);
-  }
-
-.no-underline {
+/* .no-underline {
     text-decoration: none;
-}
+} */
 
 .logo-link {
     color: #700000;
