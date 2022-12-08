@@ -1,3 +1,7 @@
+body {
+    background-image: linear-gradient(to right, white, #D2B4DE);
+  }
+
 .no-underline {
     text-decoration: none;
 }
