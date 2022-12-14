@@ -23,7 +23,7 @@
   * All pages extend `base.html`, with contains the logo heading and stylesheet/script references
 * **Views** functions are located in `/dormapp/views.py`
   * Most views call custom database queries, which are located in `/dormapp/helpers/queries.py`
-* Test casese are in `/dormapp/tests.py`
+* Test cases are in `/dormapp/tests.py`
 * Database: `/db.sqlite3`
 * Static files are located in `/static/`
 * Media files are located in `/media/`
