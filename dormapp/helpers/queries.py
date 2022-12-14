@@ -8,7 +8,7 @@ longMaxLength = 1500
 #region homePage
 
 ## universityView
-## TODO
+## Data transfer object for homepage universities list
 class universityView():
     def __init__(self, id, name, reviewCount, logo):
         self.id = id
@@ -35,6 +35,7 @@ def getUniversities():
 
 ## addUniversity(string name)
 ## Inserts a new University object into database
+## If name has value, return the new university object, else return None
 def addUniversity(name) -> m.University:
     if name:
         university = m.University(id = uuid.uuid4(), name = name)
@@ -44,10 +45,7 @@ def addUniversity(name) -> m.University:
 
 ## addUniversityPhoto(photo, uuid universityId)
 ## Inserts a new UniversityPhoto object into database
-# def addUniversityPhoto(photo, universityId):
-#     universityPhoto = m.UniversityPhoto(university = m.University.objects.get(id = universityId), photo = photo)
-#     universityPhoto.save()
-
+## Returns true if Successful, False otherwise
 def addUniversityPhoto(university, uploadedPhoto) -> bool:
     if university and uploadedPhoto:
         photo = m.UniversityPhoto(university = university, photo = uploadedPhoto)
@@ -60,7 +58,7 @@ def addUniversityPhoto(university, uploadedPhoto) -> bool:
 #region resHallsPage
 
 ## resHallView
-## TODO
+## Data transfer object for residence halls page
 class resHallView():
     def __init__(self, id, name, thumbnail, rating):
         self.id = id
@@ -69,7 +67,8 @@ class resHallView():
         self.rating = rating
 
 ## getResHalls(uuid universityId)
-## TODO
+## Retreives all residence halls associated with a given university ID
+## returns a list of resHallView() objects
 def getResHalls(universityId):
     resHalls = m.ResHall.objects.filter(university = universityId)
     returnList = []
@@ -90,13 +89,14 @@ def getResHalls(universityId):
     return returnList
 
 ## getUniversityName(uuid universityId)
-## TODO
+## Returns university name given its ID
 def getUniversityName(universityId):
     university = m.University.objects.get(id=universityId)
     return university.name
 
 ## addResHall(uuid universityId, string name)
-## TODO
+## Adds a new residence hall to the database given its university and name
+## Returns True if successful, False otherwise
 def addResHall(universityId, name):
     if name and len(name) <= shortMaxLength:
         university = m.University.objects.get(id=universityId)
@@ -110,13 +110,14 @@ def addResHall(universityId, name):
 #region dormRoomsPage
 
 ## getResHallName(uuid resHallId)
-## TODO
+## Returns ResHall name given its ID
 def getResHallName(resHallId):
     resHall = m.ResHall.objects.get(id=resHallId)
     return resHall.name
 
 ## addResHallReview(uuid hallId, int rating, string title, string body)
-## TODO
+## Adds ResHallReview to database
+## Returns True if successful, False otherwise
 def addResHallReview(hallId, rating, title, body):
     rating = (int)(rating) if rating else 0
     if (len(title) <= shortMaxLength and
@@ -131,7 +132,8 @@ def addResHallReview(hallId, rating, title, body):
     return False
 
 ## addResHallPhoto(uuid hallId, file uploadedPhoto)
-## TODO
+## Adds ResHallPhoto to database
+## Returns True if successful, False otherwise
 def addResHallPhoto(hallId, uploadedPhoto):
     if uploadedPhoto:
         hall = m.ResHall.objects.get(id=hallId)
@@ -141,7 +143,8 @@ def addResHallPhoto(hallId, uploadedPhoto):
     return False
 
 ## addDormRoom(uuid hallId, int roomNumber)
-## TODO
+## Adds DormRoom to database
+## Returns True if successful, False otherwise
 def addDormRoom(hallId, roomNumber):
     if roomNumber and len(roomNumber) <= shortMaxLength:
         resHall = m.ResHall.objects.get(id=hallId)
@@ -151,7 +154,7 @@ def addDormRoom(hallId, roomNumber):
     return False
 
 ## dormRoomView
-## TODO
+## Data transfer object for dorm rooms list in dormRooms template
 class dormRoomView():
     def __init__(self, id, roomNumber, thumbnail, rating):
         self.id = id
@@ -160,7 +163,7 @@ class dormRoomView():
         self.rating = rating
 
 ## getDormRooms(uuid resHallId)
-## TODO
+## Returns a list of dormRoomView objects for dorm rooms associated with given resHall id
 def getDormRooms(resHallId):
     dormRooms = m.DormRoom.objects.filter(resHall = resHallId)
     returnList = []
@@ -181,12 +184,12 @@ def getDormRooms(resHallId):
     return returnList
 
 ## getResHallReviews(uuid resHallId)
-## TODO
+## Returns ResHallReview queryset given resHall id
 def getResHallReviews(resHallId):
     return m.ResHallReview.objects.filter(resHall = resHallId).order_by('-dateCreated')
 
 ## getResHallPhotos(resHallId)
-## TODO
+## Returns ResHallPhoto queryset given resHall id
 def getResHallPhotos(resHallId):
     return m.ResHallPhoto.objects.filter(resHall = resHallId).order_by('-dateCreated')
 
@@ -195,7 +198,8 @@ def getResHallPhotos(resHallId):
 #region dormRoomReviews
 
 ## addDormRoomReview(uuid dormId, int rating, string title, string body)
-## TODO
+## Adds DormRoomReview to database
+## Returns True if successful, False otherwise
 def addDormRoomReview(dormId, rating, title, body):
     rating = (int)(rating) if rating else 0
     if (len(title) <= shortMaxLength and
@@ -208,23 +212,24 @@ def addDormRoomReview(dormId, rating, title, body):
     return False
 
 ## getDormReviews(uuid dormRoomId)
-## TODO
+## Returns DormRoomReview queryset given dormRoom ID
 def getDormReviews(dormRoomId):
     return m.DormRoomReview.objects.filter(dormRoom = dormRoomId).order_by('-dateCreated')
 
 ## getDormName(uuid dormRoomId)
-## TODO
+## Returns dorm room name given its ID
 def getDormName(dormRoomId):
     dormRoom = m.DormRoom.objects.get(id = dormRoomId)
     return dormRoom.roomNumber
 
 ## getDormPhotos(uuid dormRoomId)
-## TODO
+## Returns DormRoomPhoto queryset given dorm room ID
 def getDormPhotos(dormRoomId):
     return m.DormRoomPhoto.objects.filter(dormRoom = dormRoomId).order_by('-dateCreated')
 
 ## addDormRoomPhoto(uuid dormId, file uploadedPhoto)
-## TODO
+## Adds DormRoomPhoto to database
+## Returns True if successful, False otherwise
 def addDormRoomPhoto(dormId, uploadedPhoto):
     if uploadedPhoto:
         dormRoom = m.DormRoom.objects.get(id=dormId)
